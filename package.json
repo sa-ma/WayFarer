@@ -8,7 +8,8 @@
     "build": "npm run clean && babel server --out-dir src",
     "dev": "nodemon --exec babel-node ./server/index.js",
     "start": "node ./src/index.js",
-    "test": "SET TEST_ENV=true nyc mocha ./server/test/**.js --recursive --require @babel/register --exit"
+    "test": "SET NODE_ENV= test nyc mocha ./server/test/**.js --recursive --require @babel/register --exit",
+    "migrations": "babel-node ./server/models/migrations/dropTables && babel-node ./server/models/migrations/createTables && babel-node ./SERVER/models/migrations/seeds"
   },
   "repository": {
     "type": "git",
@@ -22,23 +23,25 @@
   },
   "homepage": "https://github.com/sa-ma/WayFarer#readme",
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.24.0"
+    "make-runnable": "^1.3.6",
+    "moment": "^2.24.0",
+    "pg": "^7.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
-    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "eslint": "^6.0.1",
+    "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.18.0",
     "mocha": "^6.1.4",
