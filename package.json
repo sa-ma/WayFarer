@@ -8,8 +8,8 @@
     "build": "npm run clean && babel server --out-dir src",
     "dev": "nodemon --exec babel-node ./server/index.js",
     "start": "node ./src/index.js",
-    "coverage": "cross-env NODE_ENV=test npm run migrations && npm run test",
     "test": "cross-env NODE_ENV=test nyc mocha ./server/test/**.js --require @babel/register --exit",
+    "coverage": "cross-env NODE_ENV=test npm run migrations && npm run test",
     "createTables": "babel-node ./server/models/migrations/dropTables && babel-node ./server/models/migrations/createTables",
     "migrations": "npm run createTables && babel-node ./SERVER/models/migrations/seeds"
   },
