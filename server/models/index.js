@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import '@babel/polyfill';
+import '@babel/polyfill/noConflict';
 import { Pool } from 'pg';
 
 const pool = new Pool({
