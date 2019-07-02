@@ -3,6 +3,8 @@ node_js:
  - '10.16.0'
 script:
 - npm test
+env:
+ - NODE_ENV = test
 cache:
   directories:
     - node_modules
