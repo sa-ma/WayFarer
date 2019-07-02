@@ -8,9 +8,9 @@
     "build": "npm run clean && babel server --out-dir src",
     "dev": "nodemon --exec babel-node ./server/index.js",
     "start": "node ./src/index.js",
-    "test": "cross-env NODE_ENV=test npm run migrations && cross-env NODE_ENV=test nyc mocha ./server/test/**.js --require @babel/register --exit",
+    "test": "cross-env NODE_ENV=test npm run migrations && cross-env NODE_ENV=test nyc mocha ./server/test/**.js --timeout 15000 --require @babel/register --exit",
     "createTables": "babel-node ./server/models/migrations/dropTables && babel-node ./server/models/migrations/createTables",
-    "migrations": "npm run createTables && babel-node ./SERVER/models/migrations/seeds"
+    "migrations": "npm run createTables && babel-node ./server/models/migrations/seeds"
   },
   "repository": {
     "type": "git",

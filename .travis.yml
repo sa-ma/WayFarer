@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+ - '10.16.0'
+script:
+- npm test
+env:
+ - NODE_ENV = test
+cache:
+  directories:
+    - node_modules
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
