@@ -1,6 +1,7 @@
 import Users from '../models/Users';
 import helper from '../helpers/Helper';
 import util from '../helpers/Util';
+import exists from '../helpers/EmailExists';
 
 /**
  * @class UserController
@@ -31,6 +32,26 @@ class UserController {
       util.setError(500, 'Server Error');
       return util.send(res);
     }
+  }
+
+  /**
+   * @method Sign in User
+   * @description Method to sign in a user
+   * @param {object} req - The Request Object
+   * @param {object} res - The Response Object
+   * @returns {object} Signed user information
+   */
+  static async signIn(req, res) {
+    const { email, password } = req.body;
+    const response = await exists.emailExist(email);
+    const user = { ...response.rows[0] };
+    if (response.rowCount < 1 || !helper.verifyPassword(password, user.password)) {
+      util.setError(401, 'Email or password is incorrect');
+      return util.send(res);
+    }
+    const token = helper.generateToken({ id: user.id, is_admin: user.is_admin });
+    util.setSuccess(200, { user_id: user.id, is_admin: user.is_admin, token });
+    return util.send(res);
   }
 }
 export default UserController;

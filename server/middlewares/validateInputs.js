@@ -37,6 +37,32 @@ const validateUser = {
       }
       return next();
     }
+  ],
+  signIn: [
+    check('email')
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('Email required')
+      .isEmail()
+      .trim()
+      .withMessage('Input a valid email address')
+      .normalizeEmail(),
+    check('password')
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('Password required')
+      .trim()
+      .isLength({ min: 5 })
+      .withMessage('Password Length should be at least 5 Characters'),
+
+    (req, res, next) => {
+      const error = validationResult(req);
+      if (!error.isEmpty()) {
+        return res.status(400).json({ status: 'error', error: error.array() });
+      }
+      return next();
+    }
   ]
+
 };
 export default validateUser;
