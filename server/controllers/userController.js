@@ -18,9 +18,10 @@ class UserController {
   static async signUp(req, res) {
     try {
       const { rows } = await Users.signUp(req.body);
-      const { id, isadmin, } = rows[0];
-      const token = helper.generateToken({ id, isadmin });
-      util.setSuccess(201, { id, isadmin, token });
+      // eslint-disable-next-line camelcase
+      const { id, is_admin, } = rows[0];
+      const token = helper.generateToken({ id, is_admin });
+      util.setSuccess(201, { user_id: id, is_admin, token });
       return util.send(res);
     } catch (error) {
       if (error.code === '23505') {

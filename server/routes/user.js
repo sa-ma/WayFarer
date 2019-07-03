@@ -5,6 +5,9 @@ import validate from '../middlewares/validateInputs';
 const router = express.Router();
 router.use(express.json());
 
+// @route   POST api/v1/auth/signup
+// @desc    Sign up Route
+// @access  Public
 router.post('/signup', validate.signUp, UserController.signUp);
 
 

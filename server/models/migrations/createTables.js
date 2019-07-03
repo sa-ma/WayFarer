@@ -7,7 +7,7 @@ const createTables = `
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     password TEXT NOT NULL,
-    isAdmin BOOLEAN DEFAULT false
+    is_admin BOOLEAN DEFAULT false
   );
   CREATE TABLE IF NOT EXISTS bus
   (

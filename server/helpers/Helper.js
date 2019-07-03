@@ -53,24 +53,6 @@ class Helper {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     return decoded;
   }
-
-  /**
-   * @method generateNumberPlate
-   * @description generates number plate for vehicles
-   * @returns {string} The generated number plate
-   */
-  static generateNumberPlate() {
-    let letters = '';
-    let number = '';
-    const char = 'ABCDEFGHIJKLMNOPQRSTYZ';
-    const num = '0123456789';
-    for (let i = 0; i < 4; i += 1) {
-      letters += char.charAt(Math.floor(Math.random() * char.length));
-      number += num.charAt(Math.floor(Math.random() * num.length));
-    }
-    const plate = `${letters}-${number}`;
-    return plate;
-  }
 }
 
 export default Helper;
