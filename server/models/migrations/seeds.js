@@ -1,13 +1,14 @@
 import dbQuery from './index';
+import helper from '../../helpers/Helper';
 
 const seedTables = `
   INSERT INTO users(email, first_name, last_name, password)
-  VALUES('sama@aa.aa','Sama', 'Bala', '$2y$10$t1ZYG4Ct8DIjyXheqspKr.vPq8krK6NwroY3iQEfrkYDpdAPYBG3m'),
-  ('abel@aa.aa','Abel', 'Bala', '$2y$10$t1ZYG4Ct8DIjyXheqspKr.vPq8krK6NwroY3iQEfrkYDpdAPYBG3m'),
-  ('ben@aa.aa','Ben', 'Bala', '$2y$10$t1ZYG4Ct8DIjyXheqspKr.vPq8krK6NwroY3iQEfrkYDpdAPYBG3m');
+  VALUES('sama@aa.aa','Sama', 'Bala', '${helper.hashPassword('12345')}'),
+  ('abel@aa.aa','Abel', 'Bala', '${helper.hashPassword('12345')}'),
+  ('ben@aa.aa','Ben', 'Bala', '${helper.hashPassword('12345')}');
 
   INSERT INTO users(email, first_name, last_name, password, is_admin)
-  VALUES('admin@aa.aa','Sama', 'Admin', '$2y$10$t1ZYG4Ct8DIjyXheqspKr.vPq8krK6NwroY3iQEfrkYDpdAPYBG3m', true);
+  VALUES('admin@aa.aa','Sama', 'Admin', '${helper.hashPassword('12345')}', true);
 
   INSERT INTO bus(number_plate, manufacturer, model, year, capacity)
   VALUES('ABCD-1234', 'Toyota', 'Hiace', '2018', '14' ),
