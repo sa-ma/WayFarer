@@ -27,8 +27,8 @@ describe('Test for Authentication Endpoints', () => {
           res.body.should.have.property('status');
           res.body.should.have.property('data');
           res.body.data.should.be.an('object');
-          res.body.data.should.have.property('id').which.is.a('number');
-          res.body.data.should.have.property('isadmin').which.is.a('boolean');
+          res.body.data.should.have.property('user_id').which.is.a('number');
+          res.body.data.should.have.property('is_admin').which.is.a('boolean');
           res.body.data.should.have.property('token').which.is.a('string');
           done();
         });
@@ -47,7 +47,7 @@ describe('Test for Authentication Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.an('object');
-          res.body.should.have.property('errors');
+          res.body.should.have.property('error');
           done();
         });
     });
@@ -65,7 +65,7 @@ describe('Test for Authentication Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.an('object');
-          res.body.should.have.property('errors');
+          res.body.should.have.property('error');
           done();
         });
     });
@@ -83,7 +83,7 @@ describe('Test for Authentication Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.an('object');
-          res.body.should.have.property('errors');
+          res.body.should.have.property('error');
           done();
         });
     });
@@ -101,7 +101,7 @@ describe('Test for Authentication Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.an('object');
-          res.body.should.have.property('errors');
+          res.body.should.have.property('error');
           done();
         });
     });

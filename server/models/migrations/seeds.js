@@ -6,7 +6,7 @@ const seedTables = `
   ('abel@aa.aa','Abel', 'Bala', '$2y$10$t1ZYG4Ct8DIjyXheqspKr.vPq8krK6NwroY3iQEfrkYDpdAPYBG3m'),
   ('ben@aa.aa','Ben', 'Bala', '$2y$10$t1ZYG4Ct8DIjyXheqspKr.vPq8krK6NwroY3iQEfrkYDpdAPYBG3m');
 
-  INSERT INTO users(email, first_name, last_name, password, isAdmin)
+  INSERT INTO users(email, first_name, last_name, password, is_admin)
   VALUES('admin@aa.aa','Sama', 'Admin', '$2y$10$t1ZYG4Ct8DIjyXheqspKr.vPq8krK6NwroY3iQEfrkYDpdAPYBG3m', true);
 
   INSERT INTO bus(number_plate, manufacturer, model, year, capacity)
