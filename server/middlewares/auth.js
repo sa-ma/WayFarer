@@ -20,7 +20,7 @@ class Authenticate {
     const token = req.header('x-auth-token');
     if (!token) {
       util.setError(401, 'No Token! Authorization Denied');
-      util.send(res);
+      return util.send(res);
     }
     // Verify token
     try {
@@ -33,6 +33,10 @@ class Authenticate {
       }
       return next();
     } catch (error) {
+      if (error.message === 'invalid token') {
+        util.setError(401, 'Token is invalid');
+        return util.send(res);
+      }
       util.setError(500, 'Server Error');
       return util.send(res);
     }
