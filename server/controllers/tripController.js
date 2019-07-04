@@ -24,7 +24,7 @@ class TripController {
       } = rows[0];
       const formattedDate = moment(trip_date).format('DD-MM-YYYY');
       util.setSuccess(201, {
-        id, bus_id, origin, destination, formattedDate, fare
+        trip_id: id, bus_id, origin, destination, trip_date: formattedDate, fare
       });
       return util.send(res);
     } catch (error) {

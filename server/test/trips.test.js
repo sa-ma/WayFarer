@@ -20,7 +20,7 @@ describe('Test for Trips Endpoints', () => {
         busId: '1',
         origin: 'Lagos',
         destination: 'Abuja',
-        tripDate: '2019-04-07',
+        tripDate: '2020-12-29',
         fare: 8000
       };
       chai
@@ -45,7 +45,7 @@ describe('Test for Trips Endpoints', () => {
               res.body.data.should.have.property('origin').which.is.a('string');
               res.body.data.should.have.property('destination').which.is.a('string');
               res.body.data.should.have.property('trip_date').which.is.a('string');
-              res.body.data.should.have.property('fare').which.is.a('number');
+              res.body.data.should.have.property('fare');
               done();
             });
         });
@@ -60,7 +60,7 @@ describe('Test for Trips Endpoints', () => {
       const trip = {
         origin: 'Lagos',
         destination: 'Abuja',
-        tripDate: '2019-04-07',
+        tripDate: '2020-12-29',
         fare: 8000
       };
       chai
@@ -83,8 +83,8 @@ describe('Test for Trips Endpoints', () => {
         });
     });
 
-    // return 400 if busId is not found
-    it('should return 400 if busId is not found', (done) => {
+    // return 409 if busId is not found
+    it('should return 409 if busId is not found', (done) => {
       const loginUser = {
         email: 'admin@aa.aa',
         password: '12345'
@@ -93,7 +93,7 @@ describe('Test for Trips Endpoints', () => {
         busId: '1001',
         origin: 'Lagos',
         destination: 'Abuja',
-        tripDate: '2019-04-07',
+        tripDate: '2020-12-29',
         fare: 8000
       };
       chai
@@ -108,7 +108,7 @@ describe('Test for Trips Endpoints', () => {
             .send(trip)
             .set('x-auth-token', token)
             .end((err, res) => {
-              res.should.have.status(400);
+              res.should.have.status(409);
               res.body.should.be.an('object');
               res.body.should.have.property('error').which.is.equal('Bus not found');
               done();
@@ -125,7 +125,7 @@ describe('Test for Trips Endpoints', () => {
       const trip = {
         busId: '1',
         destination: 'Abuja',
-        tripDate: '2019-04-07',
+        tripDate: '2020-12-29',
         fare: 8000
       };
       chai
@@ -157,7 +157,7 @@ describe('Test for Trips Endpoints', () => {
       const trip = {
         busId: '1',
         origin: 'Lagos',
-        tripDate: '2019-04-07',
+        tripDate: '2020-12-29',
         fare: 8000
       };
       chai
@@ -222,7 +222,7 @@ describe('Test for Trips Endpoints', () => {
         busId: '1',
         origin: 'Lagos',
         destination: 'Abuja',
-        tripDate: '2019-04-07',
+        tripDate: '2020-12-29',
       };
       chai
         .request(app)
