@@ -62,7 +62,35 @@ const validateUser = {
       }
       return next();
     }
-  ]
+  ],
+  createTrip: [
+    check('busId')
+      .isNumeric()
+      .withMessage('Input a valid bus id'),
+    check('origin')
+      .not()
+      .isEmpty()
+      .withMessage('Origin is required'),
+    check('destination')
+      .not()
+      .isEmpty()
+      .withMessage('Destination is required'),
+    check('tripDate')
+      .isISO8601()
+      .withMessage('Wrong date format is wrong')
+      .isAfter(new Date().toDateString())
+      .withMessage('Date must be greater than current date'),
+    check('fare')
+      .isNumeric()
+      .withMessage('Fare must be a number'),
+    (req, res, next) => {
+      const error = validationResult(req);
+      if (!error.isEmpty()) {
+        return res.status(400).json({ status: 'error', error: error.array() });
+      }
+      return next();
+    }
+  ],
 
 };
 export default validateUser;
