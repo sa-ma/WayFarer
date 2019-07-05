@@ -265,7 +265,7 @@ describe('Test for Trips Endpoints', () => {
             .get(tripUrl)
             .set('x-auth-token', token)
             .end((err, res) => {
-              res.should.have.status(201);
+              res.should.have.status(200);
               res.body.should.be.an('object');
               res.body.should.have.property('status');
               res.body.should.have.property('data');
