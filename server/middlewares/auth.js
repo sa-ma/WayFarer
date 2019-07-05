@@ -33,10 +33,6 @@ class Authenticate {
       }
       return next();
     } catch (error) {
-      if (error.message === 'invalid token') {
-        util.setError(401, 'Token is invalid');
-        return util.send(res);
-      }
       util.setError(500, 'Server Error');
       return util.send(res);
     }
