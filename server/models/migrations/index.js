@@ -5,7 +5,7 @@ const pool = new Pool({
   connectionString:
     process.env.NODE_ENV === 'test'
       ? process.env.DATABASE_TEST_URL
-      : process.env.DATABASE_PROD_URL
+      : process.env.DATABASE_URL
 });
 pool.on('connect', () => {
   console.log('connected to database');
