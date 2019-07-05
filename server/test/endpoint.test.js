@@ -32,31 +32,8 @@ describe('Test for endpoints', () => {
         });
     });
 
-    // Return 401 if token isn't authorized
-    it('should return 401 if token is not authorized', (done) => {
-      const trip = {
-        busId: '1',
-        origin: 'Lagos',
-        destination: 'Abuja',
-        tripDate: '2020-12-29',
-        fare: 8000
-      };
-
-      chai
-        .request(app)
-        .post('/api/v1/trips')
-        .send(trip)
-        .set('x-auth-token', '')
-        .end((err, res) => {
-          res.should.have.status(401);
-          res.body.should.be.a('object');
-          res.should.have.property('error');
-          done();
-        });
-    });
-
-    // Return 500 if token is invalid
-    it('should return 401 if token is not authorized', (done) => {
+    // Return 401 if token is invalid
+    it('should return 401 if token is invalid', (done) => {
       const trip = {
         busId: '1',
         origin: 'Lagos',
@@ -71,10 +48,43 @@ describe('Test for endpoints', () => {
         .send(trip)
         .set('x-auth-token', 'invalid token')
         .end((err, res) => {
-          res.should.have.status(500);
+          res.should.have.status(401);
           res.body.should.be.a('object');
           res.should.have.property('error');
           done();
+        });
+    });
+
+    // Return 500 if token isn't authorized
+    it('should return 403 if token is not authorized', (done) => {
+      const user = {
+        email: 'sama@aa.aa',
+        password: '12345'
+      };
+      const trip = {
+        busId: '1',
+        origin: 'Lagos',
+        destination: 'Abuja',
+        tripDate: '2020-12-29',
+        fare: 8000
+      };
+      chai
+        .request(app)
+        .post('/api/v1/auth/signin')
+        .send(user)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .post('/api/v1/trips')
+            .send(trip)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(403);
+              res.body.should.be.a('object');
+              res.should.have.property('error');
+              done();
+            });
         });
     });
   });

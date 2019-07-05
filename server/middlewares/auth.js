@@ -19,7 +19,7 @@ class Authenticate {
     // Get token from header
     const token = req.header('x-auth-token');
     if (!token) {
-      util.setError(401, 'No Token! Authorization Denied');
+      util.setError(403, 'Not Authorized to view this route');
       return util.send(res);
     }
     // Verify token
@@ -44,7 +44,7 @@ class Authenticate {
     // Get token from header
     const token = req.header('x-auth-token');
     if (!token) {
-      util.setError(401, 'No Token! Authorization Denied');
+      util.setError(403, 'Not Authorized to view this route');
       return util.send(res);
     }
     // Verify token
@@ -53,12 +53,12 @@ class Authenticate {
       const { is_admin } = decoded;
       req.isAdmin = is_admin;
       if (!req.isAdmin) {
-        util.setError(401, 'Not Authorized to view this route');
+        util.setError(403, 'Not Authorized to view this route');
         return util.send(res);
       }
       return next();
     } catch (error) {
-      util.setError(500, 'Server Error');
+      util.setError(401, 'Token is invalid');
       return util.send(res);
     }
   }
