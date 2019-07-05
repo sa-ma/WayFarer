@@ -244,4 +244,41 @@ describe('Test for Trips Endpoints', () => {
         });
     });
   });
+
+
+  // Create Trip TESTS
+  describe(`GET ${tripUrl}`, () => {
+    // return 200 if all trips are fetched
+    it('should return 200 and get all trips', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .get(tripUrl)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(201);
+              res.body.should.be.an('object');
+              res.body.should.have.property('status');
+              res.body.should.have.property('data');
+              res.body.data.should.be.an('array');
+              res.body.data[0].should.have.property('trip_id').which.is.a('number');
+              res.body.data[0].should.have.property('bus_id').which.is.a('number');
+              res.body.data[0].should.have.property('origin').which.is.a('string');
+              res.body.data[0].should.have.property('destination').which.is.a('string');
+              res.body.data[0].should.have.property('trip_date').which.is.a('string');
+              res.body.data[0].should.have.property('fare');
+              done();
+            });
+        });
+    });
+  });
 });
