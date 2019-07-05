@@ -11,4 +11,9 @@ router.use(express.json());
 // @access  Private
 router.post('/', [Authenticate.verifyAdmin, validate.createTrip], TripController.createTrip);
 
+// @route   GET api/v1/trips/
+// @desc    Get Trip Route
+// @access  Private
+router.get('/', Authenticate.verifyToken, TripController.getTrips);
+
 export default router;

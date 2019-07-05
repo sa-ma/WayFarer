@@ -1,7 +1,7 @@
 import db from './index';
 import queries from './migrations/queries';
 
-const { createTrip } = queries;
+const { createTrip, getTrips } = queries;
 
 /**
  * @class Trips
@@ -20,6 +20,16 @@ class Trips {
     } = data;
     const values = [busId, origin, destination, tripDate, fare];
     const response = await db.query(createTrip, values);
+    return response;
+  }
+
+  /**
+   * @param  {object} data - input fields
+   * @method getTrip
+   * @returns {object} All trips
+   */
+  static async getTrips() {
+    const response = await db.query(getTrips);
     return response;
   }
 }

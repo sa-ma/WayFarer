@@ -9,6 +9,31 @@ import util from '../helpers/Util';
  */
 class Authenticate {
   /**
+   * Verify if token is valid
+   * @param  {object} req - The user request object
+   * @param  {object} res - The user res response object
+   * @param  {function} next - The next() Function
+   * @returns {object} req.user - The payload object
+   */
+  static verifyToken(req, res, next) {
+    // Get token from header
+    const token = req.header('x-auth-token');
+    if (!token) {
+      util.setError(403, 'Not Authorized to view this route');
+      return util.send(res);
+    }
+    // Verify token
+    try {
+      const decoded = helper.verifyToken(token);
+      req.user = decoded;
+      return next();
+    } catch (error) {
+      util.setError(401, 'Token is not valid');
+      return util.send(res);
+    }
+  }
+
+  /**
    * @description Verify if user is an Admin
    * @param  {object} req - The user request object
    * @param  {object} res - The user res response object
@@ -19,7 +44,7 @@ class Authenticate {
     // Get token from header
     const token = req.header('x-auth-token');
     if (!token) {
-      util.setError(401, 'No Token! Authorization Denied');
+      util.setError(403, 'Not Authorized to view this route');
       return util.send(res);
     }
     // Verify token
@@ -28,12 +53,12 @@ class Authenticate {
       const { is_admin } = decoded;
       req.isAdmin = is_admin;
       if (!req.isAdmin) {
-        util.setError(401, 'Not Authorized to view this route');
+        util.setError(403, 'Not Authorized to view this route');
         return util.send(res);
       }
       return next();
     } catch (error) {
-      util.setError(500, 'Server Error');
+      util.setError(401, 'Token is invalid');
       return util.send(res);
     }
   }

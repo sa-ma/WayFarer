@@ -36,5 +36,36 @@ class TripController {
       return util.send(res);
     }
   }
+
+  /**
+   * @method Get All Trips
+   * @description Method to get all trips
+   * @param {object} req - The Request Object
+   * @param {object} res - The Response Object
+   * @returns {object} All Trips
+   */
+  static async getTrips(req, res) {
+    try {
+      const { rows } = await Trips.getTrips();
+      const formatRows = rows.map(({
+        // eslint-disable-next-line camelcase
+        id, bus_id, origin, destination, trip_date, fare
+      }) => {
+        return ({
+          trip_id: id,
+          bus_id,
+          origin,
+          destination,
+          trip_date: moment(trip_date).format('DD-MM-YYYY'),
+          fare
+        });
+      });
+      util.setSuccess(200, [...formatRows]);
+      return util.send(res);
+    } catch (error) {
+      util.setError(500, 'Server Error');
+      return util.send(res);
+    }
+  }
 }
 export default TripController;
