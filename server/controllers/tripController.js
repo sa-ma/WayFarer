@@ -29,7 +29,7 @@ class TripController {
       return util.send(res);
     } catch (error) {
       if (error.code === '23503') {
-        util.setError(409, 'Bus not found');
+        util.setError(404, 'Bus not found');
         return util.send(res);
       }
       util.setError(500, 'Server Error');

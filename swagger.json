@@ -1,0 +1,500 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "WayFarer",
+    "description": "WayFarer is a public bus transportation booking server",
+    "contact": {
+      "email": "samailabalap@gmail.com"
+    }
+  },
+  "host": "localhost:5000",
+  "basePath": "/api/v1",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "x-auth-token",
+      "in": "header"
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "description": "Create a new user",
+        "summary": "Sign up",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "AuthSignupPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SignupRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User successfully registered",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "schema": {
+              "$ref": "#/definitions/Exists"
+            }
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "description": "Signs in a user",
+        "summary": "Sign in",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "AuthSigninPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SigninRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User signed in",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "401": {
+            "description": "Unauthorized Error",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    },
+    "/auth/admin": {
+      "post": {
+        "description": "Create an admin user",
+        "summary": "Create Admin",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "AuthAdminPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateAdminRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Admin created",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "schema": {
+              "$ref": "#/definitions/Exists"
+            }
+          }
+        }
+      }
+    },
+    "/trips": {
+      "post": {
+        "description": "Create a trip",
+        "summary": "Create trips",
+        "tags": [
+          "Trips"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "operationId": "TripsPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreatetripsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trip Created Successfully",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "401": {
+            "description": "User not Authorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "403": {
+            "description": "User not Authorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Bus not found",
+            "schema": {
+              "$ref": "#/definitions/NotExists"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Get all trips",
+        "summary": "Get All Trips",
+        "tags": [
+          "Trips"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "operationId": "TripsGet",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Trips",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "User not Authorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "403": {
+            "description": "User not Authorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SignupRequest": {
+      "title": "SignupRequest",
+      "example": {
+        "email": "johndoe@aa.aa",
+        "firstName": "John",
+        "lastName": "Doe",
+        "password": "12345"
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "firstName",
+        "lastName",
+        "password"
+      ]
+    },
+    "SigninRequest": {
+      "title": "SigninRequest",
+      "example": {
+        "email": "johndoe@aa.aa",
+        "password": "12345"
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "CreateAdminRequest": {
+      "title": "CreateAdminRequest",
+      "example": {
+        "email": "johndoe@aa.aa",
+        "firstName": "John",
+        "lastName": "Doe",
+        "password": "12345"
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "firstName",
+        "lastName",
+        "password"
+      ]
+    },
+    "CreatetripsRequest": {
+      "title": "CreatetripsRequest",
+      "example": {
+        "busId": "1",
+        "origin": "PHC",
+        "destination": "LAG",
+        "tripDate": "2019-07-06",
+        "fare": 7000
+      },
+      "type": "object",
+      "properties": {
+        "busId": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "destination": {
+          "type": "string"
+        },
+        "tripDate": {
+          "type": "string"
+        },
+        "fare": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "busId",
+        "origin",
+        "destination",
+        "tripDate",
+        "fare"
+      ]
+    },
+    "Success": {
+      "title": "User Registered",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "error"
+        },
+        "data": {
+          "type": "string"
+        }
+      }
+    },
+    "Exists": {
+      "title": "Object Exists",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "error"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "NotExists": {
+      "title": "Object doesn't Exist",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "error"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "BadRequest": {
+      "title": "badRequest",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "error"
+        },
+        "error": {
+          "type": "array",
+          "example": []
+        }
+      }
+    },
+    "UnauthorizedError": {
+      "title": "noAuth",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "error"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "ForbiddenError": {
+      "title": "forbidden",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "format": "string",
+          "example": "error"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Create users, admins and log in users"
+    },
+    {
+      "name": "Trips",
+      "description": "Create and Get all Trips"
+    }
+  ]
+}

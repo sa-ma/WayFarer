@@ -83,8 +83,8 @@ describe('Test for Trips Endpoints', () => {
         });
     });
 
-    // return 409 if busId is not found
-    it('should return 409 if busId is not found', (done) => {
+    // return 404 if busId is not found
+    it('should return 404 if busId is not found', (done) => {
       const loginUser = {
         email: 'admin@aa.aa',
         password: '12345'
@@ -108,7 +108,7 @@ describe('Test for Trips Endpoints', () => {
             .send(trip)
             .set('x-auth-token', token)
             .end((err, res) => {
-              res.should.have.status(409);
+              res.should.have.status(404);
               res.body.should.be.an('object');
               res.body.should.have.property('error').which.is.equal('Bus not found');
               done();
