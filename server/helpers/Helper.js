@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import db from '../models/index';
 
 const saltrounds = parseInt(process.env.SALT_ROUNDS, 10);
 /**
@@ -52,6 +53,34 @@ class Helper {
   static verifyToken(token) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     return decoded;
+  }
+
+  /**
+   * @method assignSeat
+   * @description assigns seat to a user based on the bus capacity and seats allocated
+   * @param {number} capacity - The total number of bus seats
+   * @param {array} collected - The seats allocated already
+   * @returns {number} The seat allocated
+   */
+  static async assignSeat(trip) {
+    const capacity = 14;
+    const queryText = `SELECT seat_number FROM booking where trip_id = ${trip} ;`;
+    const { rows } = await db.query(queryText);
+    // eslint-disable-next-line camelcase
+    const collected = rows.map(({ seat_number }) => seat_number);
+    let arr = Array.from(Array(capacity).keys());
+    arr = arr.map(i => i + 1);
+    for (let i = arr.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    let collect = arr.pop();
+    if (collected.includes(collect)) {
+      arr = arr.filter(i => collected.indexOf(i) < 0);
+      if (arr.length <= 0) collect = 0;
+      collect = arr.pop();
+    }
+    return collect;
   }
 }
 

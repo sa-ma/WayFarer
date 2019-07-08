@@ -132,7 +132,7 @@ describe('Test for Authentication Endpoints', () => {
     // return 200 if user is signed in
     it('should return 200 and signs in user', (done) => {
       const user = {
-        email: 'ben@aa.aa',
+        email: 'sama@aa.aa',
         password: '12345'
       };
       chai
