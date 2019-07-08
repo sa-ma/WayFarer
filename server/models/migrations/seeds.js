@@ -17,7 +17,5 @@ const seedTables = `
   (2, 'Warri', 'Abuja','2019-06-20', '8000'),
   (1, 'Lagos', 'Jos','2019-06-20', '8000');
 
-  INSERT INTO booking(trip_id, user_id, seat_number)
-  VALUES(2,1, 10);
   `;
 dbQuery(seedTables);

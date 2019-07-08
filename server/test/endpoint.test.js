@@ -55,7 +55,7 @@ describe('Test for endpoints', () => {
         });
     });
 
-    // Return 500 if token isn't authorized
+    // Return 403 if token isn't authorized
     it('should return 403 if token is not authorized', (done) => {
       const user = {
         email: 'sama@aa.aa',
