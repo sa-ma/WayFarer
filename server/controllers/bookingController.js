@@ -38,5 +38,34 @@ class BookingController {
       return util.send(res);
     }
   }
+
+  /**
+   * @method Get Booking
+   * @description Method to get All booking
+   * @param {object} req - The Request Object
+   * @param {object} res - The Response Object
+   * @returns {object} All Booking information
+   */
+  static async getAllBookings(req, res) {
+    try {
+      const { id, is_admin } = helper.verifyToken(req.header('x-auth-token'));
+      let user;
+      if (!is_admin) {
+        user = await Bookings.getUserBookings({ id });
+        if (user.rows.length <= 0) {
+          util.setError(404, 'No bookings found');
+          return util.send(res);
+        }
+        util.setSuccess(200, [...user.rows]);
+        return util.send(res);
+      }
+      user = await Bookings.getAllBookings();
+      util.setSuccess(200, [...user.rows]);
+      return util.send(res);
+    } catch (error) {
+      util.setError(500, 'Server Error');
+      return util.send(res);
+    }
+  }
 }
 export default BookingController;

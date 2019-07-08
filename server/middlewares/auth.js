@@ -18,10 +18,6 @@ class Authenticate {
   static verifyToken(req, res, next) {
     // Get token from header
     const token = req.header('x-auth-token');
-    if (!token) {
-      util.setError(403, 'Not Authorized to view this route');
-      return util.send(res);
-    }
     // Verify token
     try {
       const decoded = helper.verifyToken(token);
@@ -43,10 +39,6 @@ class Authenticate {
   static verifyAdmin(req, res, next) {
     // Get token from header
     const token = req.header('x-auth-token');
-    if (!token) {
-      util.setError(403, 'Not Authorized to view this route');
-      return util.send(res);
-    }
     // Verify token
     try {
       const decoded = helper.verifyToken(token);

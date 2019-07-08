@@ -11,4 +11,9 @@ router.use(express.json());
 // @access  Private
 router.post('/', [Authenticate.verifyToken, validate.createBooking], BookingController.createBooking);
 
+// @route   GET api/v1/bookings/
+// @desc    Get Booking Route
+// @access  Private
+router.get('/', Authenticate.verifyToken, BookingController.getAllBookings);
+
 export default router;
