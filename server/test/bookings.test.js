@@ -139,8 +139,8 @@ describe('Test for Booking Endpoints', () => {
 
   // Get  all booking TESTS
   describe(`GET ${bookingUrl}`, () => {
-    // return 200 if all trips are fetched
-    it('should return 200 and get all trips', (done) => {
+    // return 200 if all bookings are fetched
+    it('should return 200 and get all bookings', (done) => {
       const loginUser = {
         email: 'admin@aa.aa',
         password: '12345'
@@ -170,6 +170,30 @@ describe('Test for Booking Endpoints', () => {
               res.body.data[0].should.have.property('first_name').which.is.a('string');
               res.body.data[0].should.have.property('last_name').which.is.a('string');
               res.body.data[0].should.have.property('email').which.is.a('string');
+              done();
+            });
+        });
+    });
+    // return 404 if no bookings
+    it('should return 404 if no bookings', (done) => {
+      const loginUser = {
+        email: 'sama@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .get(bookingUrl)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(404);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error');
               done();
             });
         });
