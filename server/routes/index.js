@@ -1,6 +1,7 @@
 import express from 'express';
 import userRoute from './user';
 import tripRoute from './trip';
+import bookingRoute from './booking';
 
 const router = express.Router();
 
@@ -11,5 +12,6 @@ router.get('/', (req, res) => res.json({ status: 200, data: 'Welcome to Wayfarer
 
 router.use('/auth', userRoute);
 router.use('/trips', tripRoute);
+router.use('/bookings', bookingRoute);
 
 export default router;

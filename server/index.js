@@ -29,7 +29,7 @@ app.use('*', (req, res) => res.status(404).json({
   message: 'Endpoint not found, Please check your url again...'
 }));
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Server started on localhost:${port}`));
 

@@ -7,7 +7,8 @@ const createTables = `
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     password TEXT NOT NULL,
-    is_admin BOOLEAN DEFAULT false
+    is_admin BOOLEAN DEFAULT false,
+    created_on TIMESTAMP NOT NULL DEFAULT now(),
   );
   CREATE TABLE IF NOT EXISTS bus
   (
@@ -32,6 +33,7 @@ const createTables = `
     id SERIAL NOT NULL UNIQUE,
     trip_id INTEGER REFERENCES trip(id) ON DELETE CASCADE,
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE, 
+    seat_number VARCHAR(100) NOT NULL,
     created_on TIMESTAMP NOT NULL DEFAULT now(),
     PRIMARY KEY(trip_id, user_id)
   );

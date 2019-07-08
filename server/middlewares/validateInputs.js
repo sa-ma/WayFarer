@@ -91,6 +91,17 @@ const validateUser = {
       return next();
     }
   ],
-
+  createBooking: [
+    check('tripId')
+      .isNumeric()
+      .withMessage('Input a valid trip id'),
+    (req, res, next) => {
+      const error = validationResult(req);
+      if (!error.isEmpty()) {
+        return res.status(400).json({ status: 'error', error: error.array() });
+      }
+      return next();
+    }
+  ]
 };
 export default validateUser;
