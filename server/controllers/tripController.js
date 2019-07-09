@@ -67,5 +67,28 @@ class TripController {
       return util.send(res);
     }
   }
+
+  /**
+   * @method Cancel Trip
+   * @description Method to cancel trip
+   * @param {object} req - The Request Object
+   * @param {object} res - The Response Object
+   * @returns {object} Camcel trip message
+   */
+  static async cancelTrip(req, res) {
+    try {
+      const tripId = parseInt(req.params.tripId, 10);
+      const result = await Trips.cancelTrip(tripId);
+      if (result.rowCount < 1) {
+        util.setError(404, 'Trip not found');
+        return util.send(res);
+      }
+      util.setSuccess(200, { message: 'Trip cancelled successfully' });
+      return util.send(res);
+    } catch (error) {
+      util.setError(500, 'Server Error');
+      return util.send(res);
+    }
+  }
 }
 export default TripController;

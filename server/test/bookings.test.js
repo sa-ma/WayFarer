@@ -135,6 +135,35 @@ describe('Test for Booking Endpoints', () => {
             });
         });
     });
+
+    // return 400 if trip is cancelled
+    it('should return 400 if trip is cancelled', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      const booking = {
+        tripId: 3,
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .post(bookingUrl)
+            .send(booking)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(400);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error');
+              done();
+            });
+        });
+    });
   });
 
   // Get  all booking TESTS
@@ -222,7 +251,8 @@ describe('Test for Booking Endpoints', () => {
               res.should.have.status(200);
               res.body.should.be.an('object');
               res.body.should.have.property('status');
-              res.body.should.have.property('data').which.is.equal('Booking deleted successfully');
+              res.body.should.have.property('data');
+              res.body.data.should.have.property('message').which.is.equal('Booking cancelled successfully');
               done();
             });
         });

@@ -13,9 +13,11 @@ const seedTables = `
   ('ABCD-4567', 'Jet', 'Mover', '2018', '12' );
 
   INSERT INTO trip(bus_id,origin,destination,trip_date,fare)
-  VALUES(1,'Lagos', 'Abuja', '2019-06-20', '8000'),
-  (2, 'Warri', 'Abuja','2019-06-20', '8000'),
-  (1, 'Lagos', 'Jos','2019-06-20', '8000');
+  VALUES(1,'Lagos', 'Abuja', '2019-06-20', 8000),
+  (2, 'Warri', 'Abuja','2019-06-20', 8000);
+
+  INSERT INTO trip(bus_id,origin,destination,trip_date,fare,status)
+  VALUES(1, 'Lagos', 'Jos','2019-06-20', 8000, 'cancelled');
 
   `;
 dbQuery(seedTables);

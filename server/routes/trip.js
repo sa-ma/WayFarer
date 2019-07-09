@@ -16,4 +16,10 @@ router.post('/', [Authenticate.verifyAdmin, validate.createTrip], TripController
 // @access  Private
 router.get('/', Authenticate.verifyToken, TripController.getTrips);
 
+// @route   PATCH api/v1/trips/:tripId
+// @desc    Cancel Trip Route
+// @access  Private
+router.patch('/:tripId', [Authenticate.verifyAdmin, validate.cancelTrip], TripController.cancelTrip);
+
+
 export default router;

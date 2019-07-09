@@ -1,7 +1,9 @@
 import db from './index';
 import queries from './migrations/queries';
 
-const { createTrip, getTrips } = queries;
+const {
+  createTrip, getTrips, getTripStatus, updateTripStatus
+} = queries;
 
 /**
  * @class Trips
@@ -30,6 +32,26 @@ class Trips {
    */
   static async getTrips() {
     const response = await db.query(getTrips);
+    return response;
+  }
+
+  /**
+   * @param  {object} id - trip id
+   * @method get trip id
+   * @returns {object} trip status
+   */
+  static async getTripStatus(id) {
+    const response = await db.query(getTripStatus, [id]);
+    return response;
+  }
+
+  /**
+   * @param  {object} id - trip id
+   * @method get trip id
+   * @returns {object} trip object
+   */
+  static async cancelTrip(id) {
+    const response = await db.query(updateTripStatus, [id]);
     return response;
   }
 }
