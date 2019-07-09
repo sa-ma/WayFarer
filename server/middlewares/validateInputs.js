@@ -1,4 +1,5 @@
-import { check, validationResult } from 'express-validator';
+import { check, param, validationResult } from 'express-validator';
+import util from '../helpers/Util';
 
 const validateUser = {
   signUp: [
@@ -33,7 +34,8 @@ const validateUser = {
     (req, res, next) => {
       const error = validationResult(req);
       if (!error.isEmpty()) {
-        return res.status(400).json({ status: 'error', error: error.array() });
+        util.setError(400, { error: error.array() });
+        return util.send(res);
       }
       return next();
     }
@@ -58,7 +60,8 @@ const validateUser = {
     (req, res, next) => {
       const error = validationResult(req);
       if (!error.isEmpty()) {
-        return res.status(400).json({ status: 'error', error: error.array() });
+        util.setError(400, { error: error.array() });
+        return util.send(res);
       }
       return next();
     }
@@ -86,7 +89,8 @@ const validateUser = {
     (req, res, next) => {
       const error = validationResult(req);
       if (!error.isEmpty()) {
-        return res.status(400).json({ status: 'error', error: error.array() });
+        util.setError(400, { error: error.array() });
+        return util.send(res);
       }
       return next();
     }
@@ -98,10 +102,25 @@ const validateUser = {
     (req, res, next) => {
       const error = validationResult(req);
       if (!error.isEmpty()) {
-        return res.status(400).json({ status: 'error', error: error.array() });
+        util.setError(400, { error: error.array() });
+        return util.send(res);
       }
       return next();
     }
-  ]
+  ],
+  deleteBooking: [
+    param('bookingId')
+      .isNumeric()
+      .withMessage('Input a valid booking id'),
+    (req, res, next) => {
+      const error = validationResult(req);
+      if (!error.isEmpty()) {
+        const { msg } = error.array().find(el => el.msg);
+        util.setError(400, msg);
+        return util.send(res);
+      }
+      return next();
+    },
+  ],
 };
 export default validateUser;

@@ -199,4 +199,81 @@ describe('Test for Booking Endpoints', () => {
         });
     });
   });
+
+  // Delete booking TESTS
+  describe(`DELETE ${bookingUrl}/:bookingId`, () => {
+    // return 200 if booking is deleted
+    it('should return 200 if booking is deleted', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .delete(`${bookingUrl}/1`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.an('object');
+              res.body.should.have.property('status');
+              res.body.should.have.property('data').which.is.equal('Booking deleted successfully');
+              done();
+            });
+        });
+    });
+    // return 400 if no booking id
+    it('should return 400 if no booking id', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .delete(`${bookingUrl}/a`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(400);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error');
+              done();
+            });
+        });
+    });
+    // return 404 if no bookings
+    it('should return 404 if booking not found', (done) => {
+      const loginUser = {
+        email: 'sama@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .delete(`${bookingUrl}/9`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(404);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error').which.is.equal('Booking not found');
+              done();
+            });
+        });
+    });
+  });
 });

@@ -16,4 +16,9 @@ router.post('/', [Authenticate.verifyToken, validate.createBooking], BookingCont
 // @access  Private
 router.get('/', Authenticate.verifyToken, BookingController.getAllBookings);
 
+// @route   DELETE api/v1/bookings/:bookingId
+// @desc    DELETE Booking Route
+// @access  Private
+router.delete('/:bookingId', [Authenticate.verifyToken, validate.deleteBooking], BookingController.deleteBooking);
+
 export default router;
