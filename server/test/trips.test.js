@@ -246,7 +246,7 @@ describe('Test for Trips Endpoints', () => {
   });
 
 
-  // Create Trip TESTS
+  // GET Trip TESTS
   describe(`GET ${tripUrl}`, () => {
     // return 200 if all trips are fetched
     it('should return 200 and get all trips', (done) => {
@@ -276,6 +276,61 @@ describe('Test for Trips Endpoints', () => {
               res.body.data[0].should.have.property('destination').which.is.a('string');
               res.body.data[0].should.have.property('trip_date').which.is.a('string');
               res.body.data[0].should.have.property('fare');
+              done();
+            });
+        });
+    });
+  });
+
+  // Cancel Trip TESTS
+  describe(`PATCH ${tripUrl}/:tripId`, () => {
+    // return 200 if trip is cancelled successfully
+    it('should return 200 and cancel trip', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .patch(`${tripUrl}/3`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.an('object');
+              res.body.should.have.property('status');
+              res.body.should.have.property('data');
+              res.body.data.should.be.an('object');
+              res.body.data.should.have.property('message').which.is.a('string');
+              done();
+            });
+        });
+    });
+    // return 404 if trip is not found
+    it('should return 404 if trip is not found', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .patch(`${tripUrl}/99`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(404);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error').which.is.equal('Trip not found');
               done();
             });
         });
