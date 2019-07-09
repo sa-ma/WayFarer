@@ -67,5 +67,29 @@ class BookingController {
       return util.send(res);
     }
   }
+
+  /**
+   * @method Delete Booking
+   * @description Method to delete booking
+   * @param {object} req - The Request Object
+   * @param {object} res - The Response Object
+   * @returns {object} Deleted booking information
+   */
+  static async deleteBooking(req, res) {
+    try {
+      const { id } = helper.verifyToken(req.header('x-auth-token'));
+      const bookingId = parseInt(req.params.bookingId, 10);
+      const result = await Bookings.deleteBooking({ bookingId, userId: id });
+      if (result.rowCount < 1) {
+        util.setError(404, 'Booking not found');
+        return util.send(res);
+      }
+      util.setSuccess(200, 'Booking deleted successfully');
+      return util.send(res);
+    } catch (error) {
+      util.setError(500, 'Server Error');
+      return util.send(res);
+    }
+  }
 }
 export default BookingController;

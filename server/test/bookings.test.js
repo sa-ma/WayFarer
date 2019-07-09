@@ -201,7 +201,7 @@ describe('Test for Booking Endpoints', () => {
   });
 
   // Delete booking TESTS
-  describe(`DELETE ${bookingUrl}/:booking_id`, () => {
+  describe(`DELETE ${bookingUrl}/:bookingId`, () => {
     // return 200 if booking is deleted
     it('should return 200 if booking is deleted', (done) => {
       const loginUser = {
@@ -227,8 +227,32 @@ describe('Test for Booking Endpoints', () => {
             });
         });
     });
+    // return 400 if no booking id
+    it('should return 400 if no booking id', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .delete(`${bookingUrl}/a`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(400);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error');
+              done();
+            });
+        });
+    });
     // return 404 if no bookings
-    it('should return 404 if no bookings', (done) => {
+    it('should return 404 if booking not found', (done) => {
       const loginUser = {
         email: 'sama@aa.aa',
         password: '12345'
@@ -241,7 +265,7 @@ describe('Test for Booking Endpoints', () => {
           const { token } = authres.body.data;
           chai
             .request(app)
-            .delete(`${bookingUrl}/awq112`)
+            .delete(`${bookingUrl}/9`)
             .set('x-auth-token', token)
             .end((err, res) => {
               res.should.have.status(404);
