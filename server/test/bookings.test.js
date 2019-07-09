@@ -251,7 +251,8 @@ describe('Test for Booking Endpoints', () => {
               res.should.have.status(200);
               res.body.should.be.an('object');
               res.body.should.have.property('status');
-              res.body.should.have.property('data').which.is.equal('Booking deleted successfully');
+              res.body.should.have.property('data');
+              res.body.data.should.have.property('message').which.is.equal('Booking cancelled successfully');
               done();
             });
         });

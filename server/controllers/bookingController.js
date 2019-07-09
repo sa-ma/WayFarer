@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import Bookings from '../models/Bookings';
+import Trips from '../models/Trips';
 import util from '../helpers/Util';
 import helper from '../helpers/Helper';
 
@@ -20,6 +21,12 @@ class BookingController {
     try {
       const { tripId } = req.body;
       const { id } = helper.verifyToken(req.header('x-auth-token'));
+      const checkTrip = await Trips.getTripStatus(tripId);
+      const { status } = checkTrip.rows.find(el => el.status) || '';
+      if (status === 'cancelled') {
+        util.setError(400, 'Trip is cancelled');
+        return util.send(res);
+      }
       const seatNumber = await helper.assignSeat(tripId);
       await Bookings.createBooking({ tripId, userId: id, seatNumber });
       const { rows } = await Bookings.getBooking({ userId: id, tripId });
@@ -84,7 +91,7 @@ class BookingController {
         util.setError(404, 'Booking not found');
         return util.send(res);
       }
-      util.setSuccess(200, 'Booking deleted successfully');
+      util.setSuccess(200, { message: 'Booking cancelled successfully' });
       return util.send(res);
     } catch (error) {
       util.setError(500, 'Server Error');

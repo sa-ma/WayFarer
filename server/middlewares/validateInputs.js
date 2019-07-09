@@ -110,7 +110,7 @@ const validateUser = {
   ],
   deleteBooking: [
     param('bookingId')
-      .isNumeric()
+      .isInt()
       .withMessage('Input a valid booking id'),
     (req, res, next) => {
       const error = validationResult(req);
@@ -122,5 +122,20 @@ const validateUser = {
       return next();
     },
   ],
+  cancelTrip: [
+    param('tripId')
+      .isInt()
+      .withMessage('Input a valid trip id'),
+    (req, res, next) => {
+      const error = validationResult(req);
+      if (!error.isEmpty()) {
+        const { msg } = error.array().find(el => el.msg);
+        util.setError(400, msg);
+        return util.send(res);
+      }
+      return next();
+    },
+  ],
+
 };
 export default validateUser;
