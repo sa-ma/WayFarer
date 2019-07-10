@@ -1,4 +1,6 @@
-import { check, param, validationResult } from 'express-validator';
+import {
+  check, param, query, validationResult
+} from 'express-validator';
 import util from '../helpers/Util';
 
 const validateUser = {
@@ -136,6 +138,37 @@ const validateUser = {
       return next();
     },
   ],
+  filterTripByOrigin: [
+    query('origin')
+      .optional()
+      .isAlpha()
+      .withMessage('Input a valid origin'),
+    (req, res, next) => {
+      const error = validationResult(req);
+      if (!error.isEmpty()) {
+        const { msg } = error.array().find(el => el.msg);
+        util.setError(400, msg);
+        return util.send(res);
+      }
+      return next();
+    },
+  ],
+  filterTripByDestination: [
+    query('destination')
+      .optional()
+      .isAlpha()
+      .withMessage('Input a valid destination'),
+    (req, res, next) => {
+      const error = validationResult(req);
+      if (!error.isEmpty()) {
+        const { msg } = error.array().find(el => el.msg);
+        util.setError(400, msg);
+        return util.send(res);
+      }
+      return next();
+    },
+  ],
+
 
 };
 export default validateUser;

@@ -2,7 +2,7 @@ import db from './index';
 import queries from './migrations/queries';
 
 const {
-  createTrip, getTrips, getTripStatus, updateTripStatus
+  createTrip, getTrips, getTripStatus, updateTripStatus, getFilteredTrip
 } = queries;
 
 /**
@@ -26,7 +26,6 @@ class Trips {
   }
 
   /**
-   * @param  {object} data - input fields
    * @method getTrip
    * @returns {object} All trips
    */
@@ -36,7 +35,7 @@ class Trips {
   }
 
   /**
-   * @param  {object} id - trip id
+   * @param  {integer} id - trip id
    * @method get trip id
    * @returns {object} trip status
    */
@@ -46,12 +45,22 @@ class Trips {
   }
 
   /**
-   * @param  {object} id - trip id
+   * @param  {integer} id - trip id
    * @method get trip id
    * @returns {object} trip object
    */
   static async cancelTrip(id) {
     const response = await db.query(updateTripStatus, [id]);
+    return response;
+  }
+
+  /**
+   * @param  {string} data - trip Origin or Destination
+   * @method get filtered trips
+   * @returns {object} trip object
+   */
+  static async getFilteredTrips(data) {
+    const response = await db.query(getFilteredTrip, [data]);
     return response;
   }
 }

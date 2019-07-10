@@ -12,9 +12,10 @@ router.use(express.json());
 router.post('/', [Authenticate.verifyAdmin, validate.createTrip], TripController.createTrip);
 
 // @route   GET api/v1/trips/
-// @desc    Get Trip Route
+// @desc    Get All Trips and Filter trips Route
 // @access  Private
-router.get('/', Authenticate.verifyToken, TripController.getTrips);
+router.get('/', Authenticate.verifyToken, [validate.filterTripByOrigin, validate.filterTripByDestination],
+  TripController.getTrips);
 
 // @route   PATCH api/v1/trips/:tripId
 // @desc    Cancel Trip Route
