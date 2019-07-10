@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import moment from 'moment';
 import Trips from '../models/Trips';
 import util from '../helpers/Util';
@@ -39,15 +40,65 @@ class TripController {
 
   /**
    * @method Get All Trips
-   * @description Method to get all trips
+   * @description Method to get all or filtered trips
    * @param {object} req - The Request Object
    * @param {object} res - The Response Object
    * @returns {object} All Trips
    */
   static async getTrips(req, res) {
     try {
-      const { rows } = await Trips.getTrips();
-      const formatRows = rows.map(({
+      const { origin, destination } = req.query;
+      let result;
+      if (typeof origin !== 'undefined') {
+        result = await Trips.getFilteredTrips(origin);
+        if (result.rowCount < 1) {
+          util.setError(404, 'Trip not found');
+          return util.send(res);
+        }
+        const formatRows = result.rows.map(({
+          // eslint-disable-next-line camelcase
+          id, bus_id, origin, destination, trip_date, fare
+        }) => {
+          return ({
+            trip_id: id,
+            bus_id,
+            origin,
+            destination,
+            trip_date: moment(trip_date).format('DD-MM-YYYY'),
+            fare
+          });
+        });
+        util.setSuccess(200, [...formatRows]);
+        return util.send(res);
+      }
+      if (typeof destination !== 'undefined') {
+        result = await Trips.getFilteredTrips(destination);
+        if (result.rowCount < 1) {
+          util.setError(404, 'Trip not found');
+          return util.send(res);
+        }
+        const formatRows = result.rows.map(({
+          // eslint-disable-next-line camelcase
+          id, bus_id, origin, destination, trip_date, fare
+        }) => {
+          return ({
+            trip_id: id,
+            bus_id,
+            origin,
+            destination,
+            trip_date: moment(trip_date).format('DD-MM-YYYY'),
+            fare
+          });
+        });
+        util.setSuccess(200, [...formatRows]);
+        return util.send(res);
+      }
+      result = await Trips.getTrips();
+      if (result.rowCount < 1) {
+        util.setError(404, 'Trip not found');
+        return util.send(res);
+      }
+      const formatRows = result.rows.map(({
         // eslint-disable-next-line camelcase
         id, bus_id, origin, destination, trip_date, fare
       }) => {

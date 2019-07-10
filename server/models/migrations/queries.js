@@ -5,6 +5,7 @@ export default {
   createTrip: `INSERT INTO trip (bus_id,origin,destination,trip_date, fare) VALUES ($1, $2, $3, $4, $5) RETURNING *;`,
   getTrips: `SELECT * from trip;`,
   getTripStatus: `SELECT status from trip where id = $1;`,
+  getFilteredTrip: `SELECT * from trip where lower(origin) = $1 or lower(destination) = $1;`,
   updateTripStatus: `UPDATE trip set status = 'cancelled' where id = $1 ;`,
   createBooking: `INSERT INTO booking (trip_id, user_id, seat_number) VALUES ($1, $2, $3) RETURNING *;`,
   getCurrentBooking: `SELECT b.id as booking_id, u.id as user_id, t.id as trip_id, bu.id as bus_id, trip_date, seat_number, first_name, last_name, 
