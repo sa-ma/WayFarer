@@ -44,12 +44,8 @@ class Bookings {
    * @method get all user bookings
    * @returns {object} current user booking
    */
-  static async getUserBookings(data) {
-    const {
-      userId
-    } = data;
-    const values = [userId];
-    const response = await db.query(getUserBookings, values);
+  static async getUserBookings(id) {
+    const response = await db.query(getUserBookings, [id]);
     return response;
   }
 
