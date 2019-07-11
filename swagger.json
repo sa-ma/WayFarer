@@ -8,7 +8,7 @@
       "email": "samailabalap@gmail.com"
     }
   },
-  "host": "localhost:5000",
+  "host": "wayfarerapp.herokuapp.com",
   "basePath": "/api/v1",
   "schemes": [
     "http",
@@ -287,6 +287,196 @@
           }
         }
       }
+    },
+    "/trips/1": {
+      "patch": {
+        "description": "Cancel an active trip",
+        "summary": "Cancel Trip",
+        "tags": [
+          "Trips"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "operationId": "Trips1Patch",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Trips",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "headers": {}
+          },
+          "403": {
+            "description": "User not Authorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Trip Not found",
+            "schema": {
+              "$ref": "#/definitions/NotExists"
+            }
+          }
+        }
+      }
+    },
+    "/bookings": {
+      "post": {
+        "description": "Book an active trip",
+        "summary": "Book a Trip",
+        "tags": [
+          "Bookings"
+        ],
+        "operationId": "BookingsPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/BookTripRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Trip booked successfully",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Trip is cancelled",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "403": {
+            "description": "User not Authorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Trip Not found",
+            "schema": {
+              "$ref": "#/definitions/NotExists"
+            }
+          },
+          "409": {
+            "description": "Trip already booked",
+            "schema": {
+              "$ref": "#/definitions/Exists"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Get all bookings for admin and user bookings for user",
+        "summary": "Get All Bookings",
+        "tags": [
+          "Bookings"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "operationId": "BookingsGet",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get all bookings",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "User not Authorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "No bookings found",
+            "schema": {
+              "$ref": "#/definitions/NotExists"
+            }
+          }
+        }
+      }
+    },
+    "/bookings/2": {
+      "delete": {
+        "description": "Delete a booking",
+        "summary": "Delete Booking",
+        "tags": [
+          "Bookings"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "operationId": "BookingsDelete",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Trips",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "User not Authorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "403": {
+            "description": "User not Authorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Booking Not found",
+            "schema": {
+              "$ref": "#/definitions/NotExists"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -406,13 +596,29 @@
         "fare"
       ]
     },
+    "BookTripRequest": {
+      "title": "BookTripRequest",
+      "example": {
+        "tripId": 1
+      },
+      "type": "object",
+      "properties": {
+        "tripId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "tripId"
+      ]
+    },
     "Success": {
-      "title": "User Registered",
+      "title": "OK",
       "type": "object",
       "properties": {
         "status": {
           "type": "string",
-          "example": "error"
+          "example": "success"
         },
         "data": {
           "type": "string"
@@ -495,6 +701,9 @@
     {
       "name": "Trips",
       "description": "Create and Get all Trips"
+    },
+    {
+      "name": "Bookings"
     }
   ]
 }
