@@ -58,7 +58,7 @@ class BookingController {
       const { id, is_admin } = helper.verifyToken(req.header('x-auth-token'));
       let user;
       if (!is_admin) {
-        user = await Bookings.getUserBookings({ id });
+        user = await Bookings.getUserBookings(id);
         if (user.rows.length <= 0) {
           util.setError(404, 'No bookings found');
           return util.send(res);
