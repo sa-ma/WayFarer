@@ -48,7 +48,6 @@ const validateUser = {
       .isEmpty({ ignore_whitespace: true })
       .withMessage('Email required')
       .isEmail()
-      .trim()
       .withMessage('Input a valid email address')
       .normalizeEmail(),
     check('password')

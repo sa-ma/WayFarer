@@ -282,6 +282,178 @@ describe('Test for Trips Endpoints', () => {
     });
   });
 
+  // GET Trip by Origin TESTS
+  describe(`GET ${tripUrl}?origin=`, () => {
+    // return 200 if all trips are fetched by origin
+    it('should return 200 and get all trips by origin', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .get(`${tripUrl}?origin=warri`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.an('object');
+              res.body.should.have.property('status');
+              res.body.should.have.property('data');
+              res.body.data.should.be.an('array');
+              res.body.data[0].should.have.property('trip_id').which.is.a('number');
+              res.body.data[0].should.have.property('bus_id').which.is.a('number');
+              res.body.data[0].should.have.property('origin').which.is.a('string');
+              res.body.data[0].should.have.property('destination').which.is.a('string');
+              res.body.data[0].should.have.property('trip_date').which.is.a('string');
+              res.body.data[0].should.have.property('fare');
+              done();
+            });
+        });
+    });
+
+    // return 400 if orgin is wrong
+    it('should return 400 if origin is wrong', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .get(`${tripUrl}?origin=12`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(400);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error');
+              done();
+            });
+        });
+    });
+
+    // return 404 if origin is not found
+    it('should return 404 if orgin is not found', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .get(`${tripUrl}?origin=zanzibarrr`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(404);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error');
+              done();
+            });
+        });
+    });
+  });
+
+  // GET Trip by Destination TESTS
+  describe(`GET ${tripUrl}?destination=`, () => {
+    // return 200 if all trips are fetched by destination
+    it('should return 200 and get all trips by destination', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .get(`${tripUrl}?destination=lagos`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.an('object');
+              res.body.should.have.property('status');
+              res.body.should.have.property('data');
+              res.body.data.should.be.an('array');
+              res.body.data[0].should.have.property('trip_id').which.is.a('number');
+              res.body.data[0].should.have.property('bus_id').which.is.a('number');
+              res.body.data[0].should.have.property('origin').which.is.a('string');
+              res.body.data[0].should.have.property('destination').which.is.a('string');
+              res.body.data[0].should.have.property('trip_date').which.is.a('string');
+              res.body.data[0].should.have.property('fare');
+              done();
+            });
+        });
+    });
+
+    // return 400 if destination is wrong
+    it('should return 400 if destination is wrong', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .get(`${tripUrl}?destination=12`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(400);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error');
+              done();
+            });
+        });
+    });
+
+    // return 404 if destination is not found
+    it('should return 404 if destination is not found', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .get(`${tripUrl}?destination=zanzibarrr`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(404);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error');
+              done();
+            });
+        });
+    });
+  });
+
   // Cancel Trip TESTS
   describe(`PATCH ${tripUrl}/:tripId`, () => {
     // return 200 if trip is cancelled successfully
@@ -307,6 +479,30 @@ describe('Test for Trips Endpoints', () => {
               res.body.should.have.property('data');
               res.body.data.should.be.an('object');
               res.body.data.should.have.property('message').which.is.a('string');
+              done();
+            });
+        });
+    });
+    // return 400 if trip is invalid
+    it('should return 400 if trip is invalid', (done) => {
+      const loginUser = {
+        email: 'admin@aa.aa',
+        password: '12345'
+      };
+      chai
+        .request(app)
+        .post(signinUrl)
+        .send(loginUser)
+        .end((autherr, authres) => {
+          const { token } = authres.body.data;
+          chai
+            .request(app)
+            .patch(`${tripUrl}/a`)
+            .set('x-auth-token', token)
+            .end((err, res) => {
+              res.should.have.status(400);
+              res.body.should.be.an('object');
+              res.body.should.have.property('error');
               done();
             });
         });
