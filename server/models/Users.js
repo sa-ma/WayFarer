@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import db from './index';
 import queries from './migrations/queries';
 import helpers from '../helpers/Helper';
@@ -17,10 +18,10 @@ class User {
    */
   static async signUp(data) {
     const {
-      email, firstName, lastName, password
+      email, first_name, last_name, password
     } = data;
     const hashPassword = helpers.hashPassword(password);
-    const values = [email, firstName, lastName, hashPassword];
+    const values = [email, first_name, last_name, hashPassword];
     const response = await db.query(signUp, values);
     return response;
   }
@@ -32,10 +33,10 @@ class User {
    */
   static async createAdmin(data) {
     const {
-      email, firstName, lastName, password
+      email, first_name, last_name, password
     } = data;
     const hashPassword = helpers.hashPassword(password);
-    const values = [email, firstName, lastName, hashPassword, true];
+    const values = [email, first_name, last_name, hashPassword, true];
     const response = await db.query(createAdmin, values);
     return response;
   }

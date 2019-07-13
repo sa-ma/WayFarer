@@ -17,7 +17,7 @@ describe('Test for Booking Endpoints', () => {
         password: '12345'
       };
       const booking = {
-        tripId: 1,
+        trip_id: 1,
       };
       chai
         .request(app)
@@ -57,7 +57,7 @@ describe('Test for Booking Endpoints', () => {
         password: '12345'
       };
       const booking = {
-        tripId: 1,
+        trip_id: 1,
       };
       chai
         .request(app)
@@ -86,7 +86,7 @@ describe('Test for Booking Endpoints', () => {
         password: '12345'
       };
       const booking = {
-        tripId: 1111,
+        trip_id: 1111,
       };
       chai
         .request(app)
@@ -143,7 +143,7 @@ describe('Test for Booking Endpoints', () => {
         password: '12345'
       };
       const booking = {
-        tripId: 3,
+        trip_id: 3,
       };
       chai
         .request(app)
@@ -230,7 +230,7 @@ describe('Test for Booking Endpoints', () => {
   });
 
   // Delete booking TESTS
-  describe(`DELETE ${bookingUrl}/:bookingId`, () => {
+  describe(`DELETE ${bookingUrl}/:bookings_id`, () => {
     // return 200 if booking is deleted
     it('should return 200 if booking is deleted', (done) => {
       const loginUser = {

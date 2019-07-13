@@ -199,13 +199,6 @@
         ],
         "parameters": [
           {
-            "name": "x-auth-token",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
             "name": "Body",
             "in": "body",
             "required": true,
@@ -484,8 +477,8 @@
       "title": "SignupRequest",
       "example": {
         "email": "johndoe@aa.aa",
-        "firstName": "John",
-        "lastName": "Doe",
+        "first_name": "John",
+        "last_name": "Doe",
         "password": "12345"
       },
       "type": "object",
@@ -493,10 +486,10 @@
         "email": {
           "type": "string"
         },
-        "firstName": {
+        "first_name": {
           "type": "string"
         },
-        "lastName": {
+        "last_name": {
           "type": "string"
         },
         "password": {
@@ -505,8 +498,8 @@
       },
       "required": [
         "email",
-        "firstName",
-        "lastName",
+        "first_name",
+        "last_name",
         "password"
       ]
     },
@@ -534,8 +527,8 @@
       "title": "CreateAdminRequest",
       "example": {
         "email": "johndoe@aa.aa",
-        "firstName": "John",
-        "lastName": "Doe",
+        "first_name": "John",
+        "last_name": "Doe",
         "password": "12345"
       },
       "type": "object",
@@ -543,10 +536,10 @@
         "email": {
           "type": "string"
         },
-        "firstName": {
+        "first_name": {
           "type": "string"
         },
-        "lastName": {
+        "last_name": {
           "type": "string"
         },
         "password": {
@@ -555,23 +548,23 @@
       },
       "required": [
         "email",
-        "firstName",
-        "lastName",
+        "first_name",
+        "last_name",
         "password"
       ]
     },
     "CreatetripsRequest": {
       "title": "CreatetripsRequest",
       "example": {
-        "busId": "1",
+        "bus_id": "1",
         "origin": "PHC",
         "destination": "LAG",
-        "tripDate": "2019-07-06",
+        "trip_date": "2019-07-06",
         "fare": 7000
       },
       "type": "object",
       "properties": {
-        "busId": {
+        "bus_id": {
           "type": "string"
         },
         "origin": {
@@ -580,7 +573,7 @@
         "destination": {
           "type": "string"
         },
-        "tripDate": {
+        "trip_date": {
           "type": "string"
         },
         "fare": {
@@ -589,27 +582,27 @@
         }
       },
       "required": [
-        "busId",
+        "bus_id",
         "origin",
         "destination",
-        "tripDate",
+        "trip_date",
         "fare"
       ]
     },
     "BookTripRequest": {
       "title": "BookTripRequest",
       "example": {
-        "tripId": 1
+        "trip_id": 1
       },
       "type": "object",
       "properties": {
-        "tripId": {
+        "trip_id": {
           "type": "integer",
           "format": "int32"
         }
       },
       "required": [
-        "tripId"
+        "trip_id"
       ]
     },
     "Success": {

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import db from './index';
 import queries from './migrations/queries';
 
@@ -18,9 +19,9 @@ class Trips {
    */
   static async createTrip(data) {
     const {
-      busId, origin, destination, tripDate, fare
+      bus_id, origin, destination, trip_date, fare
     } = data;
-    const values = [busId, origin, destination, tripDate, fare];
+    const values = [bus_id, origin, destination, trip_date, fare];
     const response = await db.query(createTrip, values);
     return response;
   }

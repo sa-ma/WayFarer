@@ -20,7 +20,7 @@ router.get('/', Authenticate.verifyToken, [validate.filterTripByOrigin, validate
 // @route   PATCH api/v1/trips/:tripId
 // @desc    Cancel Trip Route
 // @access  Private
-router.patch('/:tripId', [Authenticate.verifyAdmin, validate.cancelTrip], TripController.cancelTrip);
+router.patch('/:trip_id', [Authenticate.verifyAdmin, validate.cancelTrip], TripController.cancelTrip);
 
 
 export default router;

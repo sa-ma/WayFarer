@@ -1,8 +1,9 @@
+/* eslint-disable camelcase */
 import db from './index';
 import queries from './migrations/queries';
 
 const {
-  createBooking, getCurrentBooking, getUserBookings, getAllBookings, deleteBooking, getBookingId
+  createBooking, getCurrentBooking, getUserBookings, getAllBookings, deleteBooking, getbookingId
 } = queries;
 
 /**
@@ -18,9 +19,9 @@ class Bookings {
    */
   static async createBooking(data) {
     const {
-      tripId, userId, seatNumber
+      trip_id, user_id, seat_number
     } = data;
-    const values = [tripId, userId, seatNumber];
+    const values = [trip_id, user_id, seat_number];
     const response = await db.query(createBooking, values);
     return response;
   }
@@ -32,9 +33,9 @@ class Bookings {
    */
   static async getBooking(data) {
     const {
-      userId, tripId
+      user_id, trip_id
     } = data;
-    const values = [userId, tripId];
+    const values = [user_id, trip_id];
     const response = await db.query(getCurrentBooking, values);
     return response;
   }
@@ -64,8 +65,8 @@ class Bookings {
    * @method get booking id
    * @returns {object} get booking id
    */
-  static async getBookingId(id) {
-    const response = await db.query(getBookingId, [id]);
+  static async getbookingId(id) {
+    const response = await db.query(getbookingId, [id]);
     return response;
   }
 
@@ -76,9 +77,9 @@ class Bookings {
    */
   static async deleteBooking(data) {
     const {
-      bookingId, userId
+      bookings_id, user_id
     } = data;
-    const values = [bookingId, userId];
+    const values = [bookings_id, user_id];
     const response = await db.query(deleteBooking, values);
     return response;
   }

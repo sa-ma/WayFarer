@@ -35,10 +35,10 @@ describe('Test for endpoints', () => {
     // Return 401 if token is invalid
     it('should return 401 if token is invalid', (done) => {
       const trip = {
-        busId: '1',
+        bus_idd: '1',
         origin: 'Lagos',
         destination: 'Abuja',
-        tripDate: '2020-12-29',
+        trip_date: '2020-12-29',
         fare: 8000
       };
 
