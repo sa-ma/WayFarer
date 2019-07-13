@@ -13,8 +13,8 @@ describe('Test for Authentication Endpoints', () => {
     it('should return 201 and successfully create a new user', (done) => {
       const user = {
         email: 'aa@aa.aa',
-        firstName: 'Sama',
-        lastName: 'Bala',
+        first_name: 'Sama',
+        last_name: 'Bala',
         password: '123456'
       };
       chai
@@ -33,10 +33,10 @@ describe('Test for Authentication Endpoints', () => {
           done();
         });
     });
-    // return 400 if firstName is not provided
+    // return 400 if first_name is not provided
     it('should return 400 if first name is not inserted', (done) => {
       const user = {
-        lastName: 'Bala',
+        last_name: 'Bala',
         email: 'aa@aa.aa',
         password: '123456'
       };
@@ -51,10 +51,10 @@ describe('Test for Authentication Endpoints', () => {
           done();
         });
     });
-    // return 400 if lastName is not provided
+    // return 400 if last_name is not provided
     it('should return 400 if last name is not inserted', (done) => {
       const user = {
-        firstName: 'Bala',
+        first_name: 'Bala',
         email: 'aa@aa.aa',
         password: '123456'
       };
@@ -72,8 +72,8 @@ describe('Test for Authentication Endpoints', () => {
     // return 400 if email is not provided
     it('should return 400 if email is not inserted', (done) => {
       const user = {
-        firstName: 'Sama',
-        lastName: 'Bala',
+        first_name: 'Sama',
+        last_name: 'Bala',
         password: '123456'
       };
       chai
@@ -91,8 +91,8 @@ describe('Test for Authentication Endpoints', () => {
     it('should return 400 if password is not inserted', (done) => {
       const user = {
         email: 'aa@aa.aa',
-        firstName: 'Sama',
-        lastName: 'Bala',
+        first_name: 'Sama',
+        last_name: 'Bala',
       };
       chai
         .request(app)
@@ -109,8 +109,8 @@ describe('Test for Authentication Endpoints', () => {
     it('should return 409 if email is taken', (done) => {
       const user = {
         email: 'aa@aa.aa',
-        firstName: 'Sama',
-        lastName: 'Bala',
+        first_name: 'Sama',
+        last_name: 'Bala',
         password: '123456'
       };
       chai
@@ -195,8 +195,8 @@ describe('Test for Authentication Endpoints', () => {
       };
       const user = {
         email: 'way_admin@aa.aa',
-        firstName: 'Admin',
-        lastName: 'Admin',
+        first_name: 'Admin',
+        last_name: 'Admin',
         password: '123456'
       };
       chai
@@ -223,14 +223,14 @@ describe('Test for Authentication Endpoints', () => {
             });
         });
     });
-    // return 400 if firstName is not provided
+    // return 400 if first_name is not provided
     it('should return 400 if first name is not inserted', (done) => {
       const loginUser = {
         email: 'admin@aa.aa',
         password: '12345'
       };
       const user = {
-        lastName: 'Bala',
+        last_name: 'Bala',
         email: 'aa@aa.aa',
         password: '123456'
       };
@@ -253,14 +253,14 @@ describe('Test for Authentication Endpoints', () => {
             });
         });
     });
-    // return 400 if lastName is not provided
+    // return 400 if last_name is not provided
     it('should return 400 if last name is not inserted', (done) => {
       const loginUser = {
         email: 'admin@aa.aa',
         password: '12345'
       };
       const user = {
-        firstName: 'Bala',
+        first_name: 'Bala',
         email: 'aa@aa.aa',
         password: '123456'
       };
@@ -290,8 +290,8 @@ describe('Test for Authentication Endpoints', () => {
         password: '12345'
       };
       const user = {
-        firstName: 'Sama',
-        lastName: 'Bala',
+        first_name: 'Sama',
+        last_name: 'Bala',
         password: '123456'
       };
       chai
@@ -321,8 +321,8 @@ describe('Test for Authentication Endpoints', () => {
       };
       const user = {
         email: 'aa@aa.aa',
-        firstName: 'Sama',
-        lastName: 'Bala',
+        first_name: 'Sama',
+        last_name: 'Bala',
       };
       chai
         .request(app)
@@ -351,8 +351,8 @@ describe('Test for Authentication Endpoints', () => {
       };
       const user = {
         email: 'aa@aa.aa',
-        firstName: 'Sama',
-        lastName: 'Bala',
+        first_name: 'Sama',
+        last_name: 'Bala',
         password: '123456'
       };
       chai

@@ -13,13 +13,13 @@ const validateUser = {
       .trim()
       .withMessage('Input a valid email address')
       .normalizeEmail(),
-    check('firstName')
+    check('first_name')
       .not()
       .isEmpty()
       .withMessage('First Name required')
       .trim()
       .withMessage('First Name must contain letters only'),
-    check('lastName')
+    check('last_name')
       .not()
       .isEmpty()
       .withMessage('Last Name required')
@@ -68,7 +68,7 @@ const validateUser = {
     }
   ],
   createTrip: [
-    check('busId')
+    check('bus_id')
       .isNumeric()
       .withMessage('Input a valid bus id'),
     check('origin')
@@ -79,7 +79,7 @@ const validateUser = {
       .not()
       .isEmpty()
       .withMessage('Destination is required'),
-    check('tripDate')
+    check('trip_date')
       .isISO8601()
       .withMessage('Wrong date format is wrong')
       .isAfter(new Date().toDateString())
@@ -97,7 +97,7 @@ const validateUser = {
     }
   ],
   createBooking: [
-    check('tripId')
+    check('trip_id')
       .isNumeric()
       .withMessage('Input a valid trip id'),
     (req, res, next) => {
@@ -110,7 +110,7 @@ const validateUser = {
     }
   ],
   deleteBooking: [
-    param('bookingId')
+    param('bookings_id')
       .isInt()
       .withMessage('Input a valid booking id'),
     (req, res, next) => {
@@ -124,7 +124,7 @@ const validateUser = {
     },
   ],
   cancelTrip: [
-    param('tripId')
+    param('trip_id')
       .isInt()
       .withMessage('Input a valid trip id'),
     (req, res, next) => {

@@ -17,10 +17,10 @@ describe('Test for Trips Endpoints', () => {
         password: '12345'
       };
       const trip = {
-        busId: '1',
+        bus_id: '1',
         origin: 'Lagos',
         destination: 'Abuja',
-        tripDate: '2020-12-29',
+        trip_date: '2020-12-29',
         fare: 8000
       };
       chai
@@ -51,8 +51,8 @@ describe('Test for Trips Endpoints', () => {
         });
     });
 
-    // return 400 if busId is not inputed
-    it('should return 400 if busId is not inserted', (done) => {
+    // return 400 if bus_id is not inputed
+    it('should return 400 if bus_id is not inserted', (done) => {
       const loginUser = {
         email: 'admin@aa.aa',
         password: '12345'
@@ -60,7 +60,7 @@ describe('Test for Trips Endpoints', () => {
       const trip = {
         origin: 'Lagos',
         destination: 'Abuja',
-        tripDate: '2020-12-29',
+        trip_date: '2020-12-29',
         fare: 8000
       };
       chai
@@ -83,17 +83,17 @@ describe('Test for Trips Endpoints', () => {
         });
     });
 
-    // return 404 if busId is not found
-    it('should return 404 if busId is not found', (done) => {
+    // return 404 if bus_id is not found
+    it('should return 404 if bus_id is not found', (done) => {
       const loginUser = {
         email: 'admin@aa.aa',
         password: '12345'
       };
       const trip = {
-        busId: '1001',
+        bus_id: '1001',
         origin: 'Lagos',
         destination: 'Abuja',
-        tripDate: '2020-12-29',
+        trip_date: '2020-12-29',
         fare: 8000
       };
       chai
@@ -123,9 +123,9 @@ describe('Test for Trips Endpoints', () => {
         password: '12345'
       };
       const trip = {
-        busId: '1',
+        bus_id: '1',
         destination: 'Abuja',
-        tripDate: '2020-12-29',
+        trip_date: '2020-12-29',
         fare: 8000
       };
       chai
@@ -155,9 +155,9 @@ describe('Test for Trips Endpoints', () => {
         password: '12345'
       };
       const trip = {
-        busId: '1',
+        bus_id: '1',
         origin: 'Lagos',
-        tripDate: '2020-12-29',
+        trip_date: '2020-12-29',
         fare: 8000
       };
       chai
@@ -187,7 +187,7 @@ describe('Test for Trips Endpoints', () => {
         password: '12345'
       };
       const trip = {
-        busId: '1',
+        bus_id: '1',
         origin: 'Lagos',
         destination: 'Abuja',
         fare: 8000
@@ -219,10 +219,10 @@ describe('Test for Trips Endpoints', () => {
         password: '12345'
       };
       const trip = {
-        busId: '1',
+        bus_id: '1',
         origin: 'Lagos',
         destination: 'Abuja',
-        tripDate: '2020-12-29',
+        trip_date: '2020-12-29',
       };
       chai
         .request(app)
@@ -455,7 +455,7 @@ describe('Test for Trips Endpoints', () => {
   });
 
   // Cancel Trip TESTS
-  describe(`PATCH ${tripUrl}/:tripId`, () => {
+  describe(`PATCH ${tripUrl}/:trip_id`, () => {
     // return 200 if trip is cancelled successfully
     it('should return 200 and cancel trip', (done) => {
       const loginUser = {
