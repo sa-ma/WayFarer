@@ -218,7 +218,6 @@ describe('Test for Authentication Endpoints', () => {
               res.body.data.should.be.an('object');
               res.body.data.should.have.property('user_id').which.is.a('number');
               res.body.data.should.have.property('is_admin').which.is.a('boolean').which.is.equal(true);
-              res.body.data.should.have.property('token').which.is.a('string');
               done();
             });
         });
