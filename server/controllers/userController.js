@@ -21,7 +21,7 @@ class UserController {
       const { rows } = await Users.signUp(req.body);
       // eslint-disable-next-line camelcase
       const { id, is_admin, } = rows[0];
-      const token = helper.generateToken({ id, is_admin });
+      const token = helper.generateToken({ user_id: id, is_admin });
       util.setSuccess(201, { user_id: id, is_admin, token });
       return util.send(res);
     } catch (error) {
@@ -49,7 +49,7 @@ class UserController {
       util.setError(401, 'Email or password is incorrect');
       return util.send(res);
     }
-    const token = helper.generateToken({ id: user.id, is_admin: user.is_admin });
+    const token = helper.generateToken({ user_id: user.id, is_admin: user.is_admin });
     util.setSuccess(200, { user_id: user.id, is_admin: user.is_admin, token });
     return util.send(res);
   }
@@ -66,8 +66,7 @@ class UserController {
       const { rows } = await Users.createAdmin(req.body);
       // eslint-disable-next-line camelcase
       const { id, is_admin, } = rows[0];
-      const token = helper.generateToken({ id, is_admin });
-      util.setSuccess(201, { user_id: id, is_admin, token });
+      util.setSuccess(201, { user_id: id, is_admin });
       return util.send(res);
     } catch (error) {
       if (error.code === '23505') {
