@@ -39,8 +39,7 @@ To run this program you need to have:
 - Users can book a seat on trip
 - Admin can see all bookings and User can see all his/her bookings
 - Users can delete their bookings
-- Admin and Users can filter trips based on origin or destination
-  
+- Admin and Users can filter trips based on origin or destination  
 ## Tests
 To run test run `npm test` command.
 The test covers all the specified endpoints
@@ -54,17 +53,18 @@ This application was deployed to the following:
 - [Documentation](https://wayfarerapp.herokuapp.com/api-docs) : API Documentation
 
 ## API Endpoints
-| METHOD | DESCRIPTION                           | ENDPOINTS                       |
-| ------ | ------------------------------------- | ------------------------------- |
-| POST   | User's Sign up                        | `/api/v1/auth/signup`           |
-| POST   | User's Sign in                        | `/api/v1/auth/signin`           |
-| POST   | Admin can create a trip               | `/api/v1/trips`                 |
-| PATCH  | Admin can cancel a trip               | `/api/trips/:tripId`            |
-| GET    | Admin and users can see all trips     | `/api/v1/trips`                 |
-| POST   | Users can book a seat on a trip       | `/api/v1/bookings`              |
-| GET    | Admins and Users can see all bookings | `/api/v1/bookings`              |
-| DELETE | Users can delete their bookings       | `/api/v1/bookings`              |
-| GET    | Admins and Users can filter trips     | `/api/v1/trips?origin=anything` |
+| METHOD | DESCRIPTION                                 | ENDPOINTS                            |
+| ------ | ------------------------------------------- | ------------------------------------ |
+| POST   | User's Sign up                              | `/api/v1/auth/signup`                |
+| POST   | User's Sign in                              | `/api/v1/auth/signin`                |
+| POST   | Admin can create a trip                     | `/api/v1/trips`                      |
+| PATCH  | Admin can cancel a trip                     | `/api/trips/:tripId`                 |
+| GET    | Admin and users can see all trips           | `/api/v1/trips`                      |
+| POST   | Users can book a seat on a trip             | `/api/v1/bookings`                   |
+| GET    | Admins and Users can see all bookings       | `/api/v1/bookings`                   |
+| DELETE | Users can delete their bookings             | `/api/v1/bookings`                   |
+| GET    | Admins & Users can get trips by origin      | `/api/v1/trips?origin=anything`      |
+| GET    | Admins & Users can get trips by destination | `/api/v1/trips?destination=anything` |
 
 ## License
 

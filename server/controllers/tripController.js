@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 import moment from 'moment';
 import Trips from '../models/Trips';
@@ -25,7 +26,7 @@ class TripController {
       } = rows[0];
       const formattedDate = moment(trip_date).format('DD-MM-YYYY');
       util.setSuccess(201, {
-        trip_id: id, bus_id, origin, destination, trip_date: formattedDate, fare
+        id, bus_id, origin, destination, trip_date: formattedDate, fare
       });
       return util.send(res);
     } catch (error) {
@@ -56,7 +57,6 @@ class TripController {
           return util.send(res);
         }
         const formatRows = result.rows.map(({
-          // eslint-disable-next-line camelcase
           id, bus_id, origin, destination, trip_date, fare
         }) => {
           return ({
@@ -78,7 +78,6 @@ class TripController {
           return util.send(res);
         }
         const formatRows = result.rows.map(({
-          // eslint-disable-next-line camelcase
           id, bus_id, origin, destination, trip_date, fare
         }) => {
           return ({
@@ -99,7 +98,6 @@ class TripController {
         return util.send(res);
       }
       const formatRows = result.rows.map(({
-        // eslint-disable-next-line camelcase
         id, bus_id, origin, destination, trip_date, fare
       }) => {
         return ({

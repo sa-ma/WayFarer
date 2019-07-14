@@ -29,14 +29,14 @@ describe('Test for Booking Endpoints', () => {
             .request(app)
             .post(bookingUrl)
             .send(booking)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(201);
               res.body.should.be.an('object');
               res.body.should.have.property('status');
               res.body.should.have.property('data');
               res.body.data.should.be.an('object');
-              res.body.data.should.have.property('booking_id').which.is.a('number');
+              res.body.data.should.have.property('id').which.is.a('number');
               res.body.data.should.have.property('user_id').which.is.a('number');
               res.body.data.should.have.property('trip_id').which.is.a('number');
               res.body.data.should.have.property('bus_id').which.is.a('number');
@@ -69,7 +69,7 @@ describe('Test for Booking Endpoints', () => {
             .request(app)
             .post(bookingUrl)
             .send(booking)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(409);
               res.body.should.be.an('object');
@@ -98,7 +98,7 @@ describe('Test for Booking Endpoints', () => {
             .request(app)
             .post(bookingUrl)
             .send(booking)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(404);
               res.body.should.be.an('object');
@@ -126,7 +126,7 @@ describe('Test for Booking Endpoints', () => {
             .request(app)
             .post(bookingUrl)
             .send(booking)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -155,7 +155,7 @@ describe('Test for Booking Endpoints', () => {
             .request(app)
             .post(bookingUrl)
             .send(booking)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -183,7 +183,7 @@ describe('Test for Booking Endpoints', () => {
           chai
             .request(app)
             .get(bookingUrl)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.an('object');
@@ -218,7 +218,7 @@ describe('Test for Booking Endpoints', () => {
           chai
             .request(app)
             .get(bookingUrl)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(404);
               res.body.should.be.an('object');
@@ -246,7 +246,7 @@ describe('Test for Booking Endpoints', () => {
           chai
             .request(app)
             .delete(`${bookingUrl}/1`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.an('object');
@@ -272,7 +272,7 @@ describe('Test for Booking Endpoints', () => {
           chai
             .request(app)
             .delete(`${bookingUrl}/a`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -296,7 +296,7 @@ describe('Test for Booking Endpoints', () => {
           chai
             .request(app)
             .delete(`${bookingUrl}/9`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(404);
               res.body.should.be.an('object');

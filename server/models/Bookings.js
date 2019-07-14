@@ -77,9 +77,9 @@ class Bookings {
    */
   static async deleteBooking(data) {
     const {
-      bookings_id, user_id
+      booking_id, user_id
     } = data;
-    const values = [bookings_id, user_id];
+    const values = [booking_id, user_id];
     const response = await db.query(deleteBooking, values);
     return response;
   }

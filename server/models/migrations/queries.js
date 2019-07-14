@@ -8,7 +8,7 @@ export default {
   getFilteredTrip: `SELECT * from trip where lower(origin) = $1 or lower(destination) = $1;`,
   updateTripStatus: `UPDATE trip set status = 'cancelled' where id = $1 ;`,
   createBooking: `INSERT INTO booking (trip_id, user_id, seat_number) VALUES ($1, $2, $3) RETURNING *;`,
-  getCurrentBooking: `SELECT b.id as booking_id, u.id as user_id, t.id as trip_id, bu.id as bus_id, trip_date, seat_number, first_name, last_name, 
+  getCurrentBooking: `SELECT b.id as id, u.id as user_id, t.id as trip_id, bu.id as bus_id, trip_date, seat_number, first_name, last_name, 
   email from booking b inner join users u on u.id = b.user_id inner join trip t on t.id= b.trip_id inner join bus bu on bu.id = t.bus_id 
   where u.id = $1 and t.id = $2;`,
   getUserBookings: `SELECT b.id as booking_id, u.id as user_id, t.id as trip_id, bu.id as bus_id, trip_date, seat_number, first_name, last_name, 
