@@ -110,7 +110,7 @@ const validateUser = {
     }
   ],
   deleteBooking: [
-    param('bookings_id')
+    param('booking_id')
       .isInt()
       .withMessage('Input a valid booking id'),
     (req, res, next) => {
@@ -167,7 +167,5 @@ const validateUser = {
       return next();
     },
   ],
-
-
 };
 export default validateUser;

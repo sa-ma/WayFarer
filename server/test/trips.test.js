@@ -33,14 +33,14 @@ describe('Test for Trips Endpoints', () => {
             .request(app)
             .post(tripUrl)
             .send(trip)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(201);
               res.body.should.be.an('object');
               res.body.should.have.property('status');
               res.body.should.have.property('data');
               res.body.data.should.be.an('object');
-              res.body.data.should.have.property('trip_id').which.is.a('number');
+              res.body.data.should.have.property('id').which.is.a('number');
               res.body.data.should.have.property('bus_id').which.is.a('number');
               res.body.data.should.have.property('origin').which.is.a('string');
               res.body.data.should.have.property('destination').which.is.a('string');
@@ -73,7 +73,7 @@ describe('Test for Trips Endpoints', () => {
             .request(app)
             .post(tripUrl)
             .send(trip)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -106,7 +106,7 @@ describe('Test for Trips Endpoints', () => {
             .request(app)
             .post(tripUrl)
             .send(trip)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(404);
               res.body.should.be.an('object');
@@ -138,7 +138,7 @@ describe('Test for Trips Endpoints', () => {
             .request(app)
             .post(tripUrl)
             .send(trip)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -170,7 +170,7 @@ describe('Test for Trips Endpoints', () => {
             .request(app)
             .post(tripUrl)
             .send(trip)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -202,7 +202,7 @@ describe('Test for Trips Endpoints', () => {
             .request(app)
             .post(tripUrl)
             .send(trip)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -234,7 +234,7 @@ describe('Test for Trips Endpoints', () => {
             .request(app)
             .post(tripUrl)
             .send(trip)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -263,7 +263,7 @@ describe('Test for Trips Endpoints', () => {
           chai
             .request(app)
             .get(tripUrl)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.an('object');
@@ -299,7 +299,7 @@ describe('Test for Trips Endpoints', () => {
           chai
             .request(app)
             .get(`${tripUrl}?origin=warri`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.an('object');
@@ -332,7 +332,7 @@ describe('Test for Trips Endpoints', () => {
           chai
             .request(app)
             .get(`${tripUrl}?origin=12`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -357,7 +357,7 @@ describe('Test for Trips Endpoints', () => {
           chai
             .request(app)
             .get(`${tripUrl}?origin=zanzibarrr`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(404);
               res.body.should.be.an('object');
@@ -385,7 +385,7 @@ describe('Test for Trips Endpoints', () => {
           chai
             .request(app)
             .get(`${tripUrl}?destination=lagos`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.an('object');
@@ -418,7 +418,7 @@ describe('Test for Trips Endpoints', () => {
           chai
             .request(app)
             .get(`${tripUrl}?destination=12`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -443,7 +443,7 @@ describe('Test for Trips Endpoints', () => {
           chai
             .request(app)
             .get(`${tripUrl}?destination=zanzibarrr`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(404);
               res.body.should.be.an('object');
@@ -471,7 +471,7 @@ describe('Test for Trips Endpoints', () => {
           chai
             .request(app)
             .patch(`${tripUrl}/3`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.an('object');
@@ -498,7 +498,7 @@ describe('Test for Trips Endpoints', () => {
           chai
             .request(app)
             .patch(`${tripUrl}/a`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -522,7 +522,7 @@ describe('Test for Trips Endpoints', () => {
           chai
             .request(app)
             .patch(`${tripUrl}/99`)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(404);
               res.body.should.be.an('object');

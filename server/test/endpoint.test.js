@@ -46,7 +46,7 @@ describe('Test for endpoints', () => {
         .request(app)
         .post('/api/v1/trips')
         .send(trip)
-        .set('x-auth-token', 'invalid token')
+        .set('token', 'invalid token')
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.be.a('object');
@@ -78,7 +78,7 @@ describe('Test for endpoints', () => {
             .request(app)
             .post('/api/v1/trips')
             .send(trip)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(403);
               res.body.should.be.a('object');

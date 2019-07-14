@@ -62,3 +62,6 @@ typings/
 
 #build
 src/
+
+#sql 
+wayfarer.sql

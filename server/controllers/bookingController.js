@@ -19,8 +19,9 @@ class BookingController {
    */
   static async createBooking(req, res) {
     try {
+      const { token } = req.headers;
       const { trip_id } = req.body;
-      const { user_id } = helper.verifyToken(req.header('x-auth-token'));
+      const { user_id } = helper.verifyToken(token);
       const checkTrip = await Trips.getTripStatus(trip_id);
       const { status } = checkTrip.rows.find(el => el.status) || '';
       if (status === 'cancelled') {
@@ -55,10 +56,11 @@ class BookingController {
    */
   static async getAllBookings(req, res) {
     try {
-      const { id, is_admin } = helper.verifyToken(req.header('x-auth-token'));
+      const { token } = req.headers;
+      const { user_id, is_admin } = helper.verifyToken(token);
       let user;
       if (!is_admin) {
-        user = await Bookings.getUserBookings(id);
+        user = await Bookings.getUserBookings(user_id);
         if (user.rows.length <= 0) {
           util.setError(404, 'No bookings found');
           return util.send(res);
@@ -84,9 +86,10 @@ class BookingController {
    */
   static async deleteBooking(req, res) {
     try {
-      const { user_id } = helper.verifyToken(req.header('x-auth-token'));
-      const bookingId = parseInt(req.params.bookings_id, 10);
-      const result = await Bookings.deleteBooking({ bookings_id: bookingId, user_id });
+      const { token } = req.headers;
+      const { user_id } = helper.verifyToken(token);
+      const booking_id = parseInt(req.params.booking_id, 10);
+      const result = await Bookings.deleteBooking({ booking_id, user_id });
       if (result.rowCount < 1) {
         util.setError(404, 'Booking not found');
         return util.send(res);

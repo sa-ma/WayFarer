@@ -209,7 +209,7 @@ describe('Test for Authentication Endpoints', () => {
             .request(app)
             .post(`${url}admin`)
             .send(user)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(201);
               res.body.should.be.an('object');
@@ -243,7 +243,7 @@ describe('Test for Authentication Endpoints', () => {
             .request(app)
             .post(`${url}admin`)
             .send(user)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -273,7 +273,7 @@ describe('Test for Authentication Endpoints', () => {
             .request(app)
             .post(`${url}admin`)
             .send(user)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -303,7 +303,7 @@ describe('Test for Authentication Endpoints', () => {
             .request(app)
             .post(`${url}admin`)
             .send(user)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -333,7 +333,7 @@ describe('Test for Authentication Endpoints', () => {
             .request(app)
             .post(`${url}admin`)
             .send(user)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(400);
               res.body.should.be.an('object');
@@ -364,7 +364,7 @@ describe('Test for Authentication Endpoints', () => {
             .request(app)
             .post(`${url}admin`)
             .send(user)
-            .set('x-auth-token', token)
+            .set('token', token)
             .end((err, res) => {
               res.should.have.status(409);
               res.body.should.be.an('object');
