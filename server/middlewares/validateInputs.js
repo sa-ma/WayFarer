@@ -36,8 +36,7 @@ const validateUser = {
     (req, res, next) => {
       const error = validationResult(req);
       if (!error.isEmpty()) {
-        util.setError(400, { error: error.array() });
-        return util.send(res);
+        return util.sendError(res, 400, { error: error.array() });
       }
       return next();
     }
@@ -61,8 +60,7 @@ const validateUser = {
     (req, res, next) => {
       const error = validationResult(req);
       if (!error.isEmpty()) {
-        util.setError(400, { error: error.array() });
-        return util.send(res);
+        return util.sendError(res, 400, { error: error.array() });
       }
       return next();
     }
@@ -90,8 +88,7 @@ const validateUser = {
     (req, res, next) => {
       const error = validationResult(req);
       if (!error.isEmpty()) {
-        util.setError(400, { error: error.array() });
-        return util.send(res);
+        return util.sendError(res, 400, { error: error.array() });
       }
       return next();
     }
@@ -103,8 +100,7 @@ const validateUser = {
     (req, res, next) => {
       const error = validationResult(req);
       if (!error.isEmpty()) {
-        util.setError(400, { error: error.array() });
-        return util.send(res);
+        return util.sendError(res, 400, { error: error.array() });
       }
       return next();
     }
@@ -117,8 +113,7 @@ const validateUser = {
       const error = validationResult(req);
       if (!error.isEmpty()) {
         const { msg } = error.array().find(el => el.msg);
-        util.setError(400, msg);
-        return util.send(res);
+        return util.sendError(res, 400, msg);
       }
       return next();
     },
@@ -131,8 +126,7 @@ const validateUser = {
       const error = validationResult(req);
       if (!error.isEmpty()) {
         const { msg } = error.array().find(el => el.msg);
-        util.setError(400, msg);
-        return util.send(res);
+        return util.sendError(res, 400, msg);
       }
       return next();
     },
@@ -146,8 +140,7 @@ const validateUser = {
       const error = validationResult(req);
       if (!error.isEmpty()) {
         const { msg } = error.array().find(el => el.msg);
-        util.setError(400, msg);
-        return util.send(res);
+        return util.sendError(res, 400, msg);
       }
       return next();
     },
@@ -161,8 +154,7 @@ const validateUser = {
       const error = validationResult(req);
       if (!error.isEmpty()) {
         const { msg } = error.array().find(el => el.msg);
-        util.setError(400, msg);
-        return util.send(res);
+        return util.sendError(res, 400, msg);
       }
       return next();
     },

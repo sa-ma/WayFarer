@@ -3,6 +3,7 @@
 import moment from 'moment';
 import Trips from '../models/Trips';
 import util from '../helpers/Util';
+import exists from '../helpers/dbHelper';
 
 /**
  * @class TripUserController
@@ -19,23 +20,21 @@ class TripController {
    */
   static async createTrip(req, res) {
     try {
+      const response = await exists.busExist(req.body.bus_id);
+      if (response.rowCount <= 0) {
+        return util.sendError(res, 404, 'Bus not found');
+      }
       const { rows } = await Trips.createTrip(req.body);
       const {
         // eslint-disable-next-line camelcase
         id, bus_id, origin, destination, trip_date, fare
       } = rows[0];
       const formattedDate = moment(trip_date).format('DD-MM-YYYY');
-      util.setSuccess(201, {
+      return util.sendSuccess(res, 201, {
         id, bus_id, origin, destination, trip_date: formattedDate, fare
       });
-      return util.send(res);
     } catch (error) {
-      if (error.code === '23503') {
-        util.setError(404, 'Bus not found');
-        return util.send(res);
-      }
-      util.setError(500, 'Server Error');
-      return util.send(res);
+      return util.sendError(res, 500, 'Server Error');
     }
   }
 
@@ -51,69 +50,26 @@ class TripController {
       const { origin, destination } = req.query;
       let result;
       if (typeof origin !== 'undefined') {
-        result = await Trips.getFilteredTrips(origin);
+        result = await Trips.getFilteredTrips(origin.toLowerCase());
         if (result.rowCount < 1) {
-          util.setError(404, 'Trip not found');
-          return util.send(res);
+          return util.sendError(res, 404, 'Trip not found');
         }
-        const formatRows = result.rows.map(({
-          id, bus_id, origin, destination, trip_date, fare
-        }) => {
-          return ({
-            trip_id: id,
-            bus_id,
-            origin,
-            destination,
-            trip_date: moment(trip_date).format('DD-MM-YYYY'),
-            fare
-          });
-        });
-        util.setSuccess(200, [...formatRows]);
-        return util.send(res);
+        return util.sendSuccess(res, 200, [...result.rows]);
       }
       if (typeof destination !== 'undefined') {
-        result = await Trips.getFilteredTrips(destination);
+        result = await Trips.getFilteredTrips(destination.toLowerCase());
         if (result.rowCount < 1) {
-          util.setError(404, 'Trip not found');
-          return util.send(res);
+          return util.sendError(res, 404, 'Trip not found');
         }
-        const formatRows = result.rows.map(({
-          id, bus_id, origin, destination, trip_date, fare
-        }) => {
-          return ({
-            trip_id: id,
-            bus_id,
-            origin,
-            destination,
-            trip_date: moment(trip_date).format('DD-MM-YYYY'),
-            fare
-          });
-        });
-        util.setSuccess(200, [...formatRows]);
-        return util.send(res);
+        return util.sendSuccess(res, 200, [...result.rows]);
       }
       result = await Trips.getTrips();
       if (result.rowCount < 1) {
-        util.setError(404, 'Trip not found');
-        return util.send(res);
+        return util.sendError(res, 404, 'Trip not found');
       }
-      const formatRows = result.rows.map(({
-        id, bus_id, origin, destination, trip_date, fare
-      }) => {
-        return ({
-          trip_id: id,
-          bus_id,
-          origin,
-          destination,
-          trip_date: moment(trip_date).format('DD-MM-YYYY'),
-          fare
-        });
-      });
-      util.setSuccess(200, [...formatRows]);
-      return util.send(res);
+      return util.sendSuccess(res, 200, [...result.rows]);
     } catch (error) {
-      util.setError(500, 'Server Error');
-      return util.send(res);
+      return util.sendError(res, 500, 'Server Error');
     }
   }
 
@@ -129,14 +85,11 @@ class TripController {
       const tripId = parseInt(req.params.trip_id, 10);
       const result = await Trips.cancelTrip(tripId);
       if (result.rowCount < 1) {
-        util.setError(404, 'Trip not found');
-        return util.send(res);
+        return util.sendError(res, 404, 'Trip not found');
       }
-      util.setSuccess(200, { message: 'Trip cancelled successfully' });
-      return util.send(res);
+      return util.sendSuccess(res, 200, { message: 'Trip cancelled successfully' });
     } catch (error) {
-      util.setError(500, 'Server Error');
-      return util.send(res);
+      return util.sendError(res, 500, 'Server Error');
     }
   }
 }

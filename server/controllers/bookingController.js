@@ -3,6 +3,7 @@ import Bookings from '../models/Bookings';
 import Trips from '../models/Trips';
 import util from '../helpers/Util';
 import helper from '../helpers/Helper';
+import exists from '../helpers/dbHelper';
 
 /**
  * @class BookingController
@@ -25,25 +26,22 @@ class BookingController {
       const checkTrip = await Trips.getTripStatus(trip_id);
       const { status } = checkTrip.rows.find(el => el.status) || '';
       if (status === 'cancelled') {
-        util.setError(400, 'Trip is cancelled');
-        return util.send(res);
+        return util.sendError(res, 400, 'Trip is cancelled');
+      }
+      let response = await exists.tripExist(trip_id);
+      if (response.rowCount <= 0) {
+        return util.sendError(res, 404, 'Trip not found');
+      }
+      response = await exists.bookingExist(trip_id, user_id);
+      if (response.rowCount >= 1) {
+        return util.sendError(res, 409, 'Trip already booked');
       }
       const seat_number = await helper.assignSeat(trip_id);
       await Bookings.createBooking({ trip_id, user_id, seat_number });
       const { rows } = await Bookings.getBooking({ user_id, trip_id });
-      util.setSuccess(201, { ...rows[0] });
-      return util.send(res);
+      return util.sendSuccess(res, 201, { ...rows[0] });
     } catch (error) {
-      if (error.code === '23503') {
-        util.setError(404, 'Trip not found');
-        return util.send(res);
-      }
-      if (error.code === '23505') {
-        util.setError(409, 'Trip already booked');
-        return util.send(res);
-      }
-      util.setError(500, 'Server Error');
-      return util.send(res);
+      return util.sendError(res, 500, 'Server Error');
     }
   }
 
@@ -62,18 +60,14 @@ class BookingController {
       if (!is_admin) {
         user = await Bookings.getUserBookings(user_id);
         if (user.rows.length <= 0) {
-          util.setError(404, 'No bookings found');
-          return util.send(res);
+          return util.sendError(res, 404, 'No bookings found');
         }
-        util.setSuccess(200, [...user.rows]);
-        return util.send(res);
+        return util.sendSuccess(res, 200, [...user.rows]);
       }
       user = await Bookings.getAllBookings();
-      util.setSuccess(200, [...user.rows]);
-      return util.send(res);
+      return util.sendSuccess(res, 200, [...user.rows]);
     } catch (error) {
-      util.setError(500, 'Server Error');
-      return util.send(res);
+      return util.sendError(res, 500, 'Server Error');
     }
   }
 
@@ -91,14 +85,11 @@ class BookingController {
       const booking_id = parseInt(req.params.booking_id, 10);
       const result = await Bookings.deleteBooking({ booking_id, user_id });
       if (result.rowCount < 1) {
-        util.setError(404, 'Booking not found');
-        return util.send(res);
+        return util.sendError(res, 404, 'Booking not found');
       }
-      util.setSuccess(200, { message: 'Booking cancelled successfully' });
-      return util.send(res);
+      return util.sendSuccess(res, 200, { message: 'Booking cancelled successfully' });
     } catch (error) {
-      util.setError(500, 'Server Error');
-      return util.send(res);
+      return util.sendError(res, 500, 'Server Error');
     }
   }
 }

@@ -298,7 +298,7 @@ describe('Test for Trips Endpoints', () => {
           const { token } = authres.body.data;
           chai
             .request(app)
-            .get(`${tripUrl}?origin=warri`)
+            .get(`${tripUrl}?origin=Warri`)
             .set('token', token)
             .end((err, res) => {
               res.should.have.status(200);
