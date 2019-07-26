@@ -23,9 +23,9 @@ To run this program you need to have:
 >> git clone https://github.com/sa-ma/WayFarer.git
 >> cd Wayfarer
 ``` 
-- Install the production dependency `npm install --prod`
+- Install dependencies `npm install`
 - Create an .env file using env.sample as a sample
-- run `npm run createTables` to seed database tables
+- run `npm run migrations` to seed database tables
 - run `npm run build` to transpile the project
 - run `npm start` to start the local server
 - Use postman to access the server and  on `http://localhost:3000` and other endpoints

@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import swaggerui from 'swagger-ui-express';
 import route from './routes/index';
@@ -7,7 +8,8 @@ import swaggerDocument from '../swagger.json';
 const app = express();
 
 // Initialize Middleware
-app.use(express.json({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // API documentation
 app.use('/api-docs', swaggerui.serve, swaggerui.setup(swaggerDocument));
@@ -25,7 +27,7 @@ app.use(cors(corsOptions));
 app.use('/api/v1', route);
 
 app.use('*', (req, res) => res.status(404).json({
-  status: 404,
+  status: 'error',
   message: 'Endpoint not found, Please check your url again...'
 }));
 

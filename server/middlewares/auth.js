@@ -24,8 +24,7 @@ class Authenticate {
       req.user = decoded;
       return next();
     } catch (error) {
-      util.setError(401, 'Token is not valid');
-      return util.send(res);
+      return util.sendError(res, 401, 'Token is invalid');
     }
   }
 
@@ -45,13 +44,11 @@ class Authenticate {
       const { is_admin } = decoded;
       req.isAdmin = is_admin;
       if (!req.isAdmin) {
-        util.setError(403, 'Not Authorized to view this route');
-        return util.send(res);
+        return util.sendError(res, 403, 'Not Authorized to view this route');
       }
       return next();
     } catch (error) {
-      util.setError(401, 'Token is invalid');
-      return util.send(res);
+      return util.sendError(res, 401, 'Token is invalid');
     }
   }
 }

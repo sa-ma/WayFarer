@@ -1,7 +1,7 @@
 import Users from '../models/Users';
 import helper from '../helpers/Helper';
 import util from '../helpers/Util';
-import exists from '../helpers/EmailExists';
+import exists from '../helpers/dbHelper';
 
 /**
  * @class UserController
@@ -18,19 +18,17 @@ class UserController {
    */
   static async signUp(req, res) {
     try {
+      const response = await exists.emailExist(req.body.email);
+      if (response.rowCount > 0) {
+        return util.sendError(res, 409, 'Email exists');
+      }
       const { rows } = await Users.signUp(req.body);
       // eslint-disable-next-line camelcase
       const { id, is_admin, } = rows[0];
       const token = helper.generateToken({ user_id: id, is_admin });
-      util.setSuccess(201, { user_id: id, is_admin, token });
-      return util.send(res);
+      return util.sendSuccess(res, 201, { user_id: id, is_admin, token });
     } catch (error) {
-      if (error.code === '23505') {
-        util.setError(409, 'Email already exists');
-        return util.send(res);
-      }
-      util.setError(500, 'Server Error');
-      return util.send(res);
+      return util.sendError(res, 500, 'Server Error');
     }
   }
 
@@ -46,12 +44,10 @@ class UserController {
     const response = await exists.emailExist(email);
     const user = { ...response.rows[0] };
     if (response.rowCount < 1 || !helper.verifyPassword(password, user.password)) {
-      util.setError(401, 'Email or password is incorrect');
-      return util.send(res);
+      return util.sendError(401, 'Email or password is incorrect');
     }
     const token = helper.generateToken({ user_id: user.id, is_admin: user.is_admin });
-    util.setSuccess(200, { user_id: user.id, is_admin: user.is_admin, token });
-    return util.send(res);
+    return util.sendSuccess(res, 200, { user_id: user.id, is_admin: user.is_admin, token });
   }
 
   /**
@@ -63,18 +59,16 @@ class UserController {
    */
   static async createAdmin(req, res) {
     try {
+      const response = await exists.emailExist(req.body.email);
+      if (response.rowCount > 0) {
+        return util.sendError(res, 409, 'Email exists');
+      }
       const { rows } = await Users.createAdmin(req.body);
       // eslint-disable-next-line camelcase
       const { id, is_admin, } = rows[0];
-      util.setSuccess(201, { user_id: id, is_admin });
-      return util.send(res);
+      return util.sendSuccess(res, 201, { user_id: id, is_admin });
     } catch (error) {
-      if (error.code === '23505') {
-        util.setError(409, 'Email already exists');
-        return util.send(res);
-      }
-      util.setError(500, 'Server Error');
-      return util.send(res);
+      return util.sendError(res, 500, 'Server Error');
     }
   }
 }
